@@ -26,6 +26,9 @@ import android.widget.TextView
 
 
 import android.widget.Toast
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_item.view.*
@@ -35,39 +38,20 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private val p = Paint()
+    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //ADDMOB
+        MobileAds.initialize(this)
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
         val list : ArrayList<Note> = ArrayList()
 
-        /*
-        note_list.layoutManager = LinearLayoutManager(this)
-        //note_list.layoutManager = GridLayoutManager(this, 2)
-
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-*/
-        //note_list.adapter = NoteAdapter(list, this)
 
         initSwi()
         //initSwipe()

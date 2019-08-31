@@ -15,8 +15,12 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/note_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_rec"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -27,20 +31,10 @@
             android:background="@drawable/button_shape_rec"
             android:foreground="@drawable/ripple_rec"
             android:text="Rec"
-            app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+            app:layout_constraintBottom_toTopOf="@+id/adView"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/btn_set"
-            android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:background="@drawable/button_shape_set"
-            android:foreground="@drawable/ripple_set"
-            android:text="Set"
-            app:layout_constraintBottom_toTopOf="@+id/frameLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline4" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -49,9 +43,21 @@
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toTopOf="@+id/btn_set"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_set"/>
+            app:layout_constraintTop_toTopOf="@+id/btn_set" />
+
+        <Button
+            android:id="@+id/btn_set"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:background="@drawable/button_shape_set"
+            android:foreground="@drawable/ripple_set"
+            android:text="Set"
+            app:layout_constraintBottom_toTopOf="@+id/adView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline4" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline4"
@@ -62,14 +68,18 @@
             app:layout_constraintGuide_percent="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:background="#008800"
-            android:layout_height="48dp"
-            app:layout_constraintBottom_toBottomOf="parent">
 
-        </FrameLayout>
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
 
     </android.support.constraint.ConstraintLayout>
 
