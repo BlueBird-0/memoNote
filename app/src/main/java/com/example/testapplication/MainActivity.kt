@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
-        val list : ArrayList<Note> = ArrayList()
 
 
         initSwi()
@@ -67,45 +66,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSwi(){
-        class ItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private var titleView: TextView = itemView.item_content
-
-            fun bind(beer: ViewModel) =
-                    with(itemView) {
-                        val note = beer as Note
-                        titleView.text = note.content
-                    }
-
-
-        }
-        class ViewAdapter(private val items: MutableList<ViewModel>) : RecyclerView.Adapter<ItemViewHolder>(),
-            ItemTouchHelperCallBack.ItemTouchHelperAdapter {
-            override fun onBindViewHolder(holder: ItemViewHolder, position: Int) =
-                    holder.bind(items[position])
-
-            override fun getItemCount(): Int = items.size
-
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder =
-                    ItemViewHolder(parent.inflate(R.layout.list_item))
-
-            override fun onItemMoved(fromPosition: Int, toPosition: Int) = swapItems(fromPosition, toPosition)
-
-            override fun onItemDismiss(position: Int) = deleteItem(position)
-
-            private fun deleteItem(position: Int) {
-                items.removeAt(position)
-                notifyItemRemoved(position)
-            }
-
-            private fun swapItems(positionFrom: Int, positionTo: Int) {
-                Collections.swap(items, positionFrom, positionTo)
-                notifyItemMoved(positionFrom, positionTo)
-            }
-
-            fun ViewGroup.inflate(layoutRes: Int): View {
-                return LayoutInflater.from(context).inflate(layoutRes, this, false)
-              }
-        }
 
         val list = mutableListOf<ViewModel>()
         list.add(Note("1번"))
@@ -127,16 +87,18 @@ class MainActivity : AppCompatActivity() {
         list.add(Note("1번"))
         list.add(Note("2번"))
         list.add(Note("3번"))
-        list.add(Note("4번"))
+        list.add(Note("4번"))    
 
         note_list.layoutManager = LinearLayoutManager(this)
-        val adapter = ViewAdapter(list)
+        val adapter = MyRecyclerViewAdapter(list)
         note_list.adapter = adapter
 
         val itemTouchHelperCallBack = ItemTouchHelperCallBack(adapter)
         val touchHelper = ItemTouchHelper(itemTouchHelperCallBack)
         touchHelper.attachToRecyclerView(note_list)
+
     }
+
 
     private fun initSwipe() {
         val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
