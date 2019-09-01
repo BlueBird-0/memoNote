@@ -31,10 +31,8 @@ class MyRecyclerViewAdapter(private val items: MutableList<ViewModel>) : Recycle
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is ItemViewHolder) {
-            Log.d("test001", "position :"+position )
             holder.bind(items[position])
         }else {
-            Log.d("test001", "test001")
         }
     }
 
@@ -53,10 +51,6 @@ class MyRecyclerViewAdapter(private val items: MutableList<ViewModel>) : Recycle
     }
 
     override fun getItemViewType(position: Int): Int {
-
-        Log.d("test001", "getItemViewType :"+position )
-
-        Log.d("test001", "[size ]:"+items.size )
         if(isPositionFooter(position)){
             return TYPE_FOOTER
         } else {

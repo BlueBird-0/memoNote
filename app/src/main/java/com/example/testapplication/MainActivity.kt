@@ -1,5 +1,6 @@
 package com.example.testapplication
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModel
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
@@ -14,10 +15,14 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.transition.Visibility
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethod
 import android.view.inputmethod.InputMethodManager
 import android.widget.Adapter
@@ -40,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private val p = Paint()
     lateinit var mAdView : AdView
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -62,7 +68,44 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.open_activity, R.anim.hold_activity)
         }
+        var touchListener = View.OnTouchListener{ view, motionEvent ->
+            if(motionEvent.action == MotionEvent.ACTION_DOWN){
+                fab_cam.visibility = View.VISIBLE
+                fab_mic.visibility = View.VISIBLE
 
+                var fadeIn:Animation = AnimationUtils.loadAnimation(this, R.anim.fadein_button)
+                fab_cam.startAnimation(fadeIn)
+                fab_mic.startAnimation(fadeIn)
+            }
+            else if(motionEvent.action == MotionEvent.ACTION_MOVE) {
+                if( motionEvent.x>= 0 && motionEvent.x<=fab.width &&
+                        motionEvent.y>= 0 && motionEvent.y<=fab.height ) {
+                    fab.isPressed = true
+                    fab_mic.backgroundTintList = resources.getColorStateList(R.color.colorAccent)
+                    fab_cam.backgroundTintList = resources.getColorStateList(R.color.colorAccent)
+                }else if(motionEvent.y < 0-fab.height*1.5 || motionEvent.y > fab.height * 1.5) {
+                    fab_mic.backgroundTintList = resources.getColorStateList(R.color.colorAccent)
+                    fab_cam.backgroundTintList = resources.getColorStateList(R.color.colorAccent)
+                }
+                else {
+                    if (motionEvent.x <= fab.width/2) {
+                        fab_mic.backgroundTintList = resources.getColorStateList(R.color.rippleClickedColor)
+                        fab_cam.backgroundTintList = resources.getColorStateList(R.color.colorAccent)
+                    } else if(motionEvent.x > fab.width/2) {
+                        fab_mic.backgroundTintList = resources.getColorStateList(R.color.colorAccent)
+                        fab_cam.backgroundTintList = resources.getColorStateList(R.color.rippleClickedColor)
+                    }
+                    true
+                }
+            }
+            else if(motionEvent.action == MotionEvent.ACTION_UP) {
+                fab_cam.visibility = View.GONE
+                fab_mic.visibility = View.GONE
+                true
+            }
+            false
+        }
+        fab.setOnTouchListener(touchListener)
     }
 
     private fun initSwi(){
@@ -87,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         list.add(Note("1번"))
         list.add(Note("2번"))
         list.add(Note("3번"))
-        list.add(Note("4번"))    
+        list.add(Note("4번"))
 
         note_list.layoutManager = LinearLayoutManager(this)
         val adapter = MyRecyclerViewAdapter(list)

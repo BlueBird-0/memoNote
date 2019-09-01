@@ -13,6 +13,18 @@
         android:layout_weight="1"
         tools:context=".MainActivity">
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/note_list"
             android:layout_width="0dp"
@@ -41,11 +53,37 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/ic_add"
+            app:rippleColor="@color/rippleClickedColor"
             app:layout_constraintBottom_toTopOf="@+id/btn_set"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btn_set" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_cam"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_cam"
+            app:rippleColor="@color/rippleClickedColor"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/note_list"
+            app:layout_constraintStart_toStartOf="@+id/guideline4" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_mic"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_mic"
+            android:visibility="gone"
+            app:rippleColor="@color/rippleClickedColor"
+            app:layout_constraintBottom_toBottomOf="@+id/note_list"
+            app:layout_constraintBottom_toTopOf="@+id/btn_set"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4" />
 
         <Button
             android:id="@+id/btn_set"
@@ -68,18 +106,6 @@
             app:layout_constraintGuide_percent="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            app:adSize="BANNER"
-            app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
 
     </android.support.constraint.ConstraintLayout>
 
