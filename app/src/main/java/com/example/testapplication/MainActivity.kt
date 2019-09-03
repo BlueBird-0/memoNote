@@ -21,7 +21,6 @@ import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var mAdView : AdView
 
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var audioIntent: Intent
@@ -33,27 +32,17 @@ class MainActivity : AppCompatActivity() {
 
         //ADDMOB
         MobileAds.initialize(this)
-        mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        adView.loadAd(adRequest)
 
 
+        setRecognizer() //음성 인식 세팅
 
         initSwi()
 
-        setRecognizer() //음성 인식 세팅
-        btn_rec.setOnClickListener {view->
-            //음성인식 권한 체크
-            mRecognizer.startListening(audioIntent)
-        }
 
 
-        //Floating action button event
-        fab.setOnClickListener { view ->
-            val intent = Intent(this, WriteActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(R.anim.open_activity, R.anim.hold_activity)
-        }
+        fab.setOnClickListener{}
         var touchListener = View.OnTouchListener{ view, motionEvent ->
             if(motionEvent.action == MotionEvent.ACTION_DOWN){
                 fab_cam.visibility = View.VISIBLE
@@ -87,11 +76,39 @@ class MainActivity : AppCompatActivity() {
             else if(motionEvent.action == MotionEvent.ACTION_UP) {
                 fab_cam.visibility = View.GONE
                 fab_mic.visibility = View.GONE
+
+                if( motionEvent.x>= 0 && motionEvent.x<=fab.width &&
+                        motionEvent.y>= 0 && motionEvent.y<=fab.height ) {
+                    fab_plus()  //추가 버튼 클릭
+                }else if(motionEvent.y < 0-fab.height*1.5 || motionEvent.y > fab.height * 1.5) {
+                }
+                else {
+                    if (motionEvent.x <= fab.width/2) {
+                        fab_mic() // 마이크 버튼 클릭
+                    } else if(motionEvent.x > fab.width/2) {
+                        fab_cam() // 카메라 버튼 클릭
+                    }
+                    true
+                }
                 true
             }
             false
         }
         fab.setOnTouchListener(touchListener)
+    }
+
+
+    private fun fab_plus() {
+        val intent = Intent(this, WriteActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.open_activity, R.anim.hold_activity)
+    }
+    private fun fab_mic() {
+        //음성인식 권한 체크
+        mRecognizer.startListening(audioIntent)
+    }
+    private fun fab_cam() {
+
     }
 
     private fun setRecognizer(){
