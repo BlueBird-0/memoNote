@@ -1,29 +1,32 @@
 package com.example.testapplication
 
+import android.Manifest
 import android.annotation.SuppressLint
-import android.arch.lifecycle.ViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
-import android.view.MotionEvent
-import android.view.View
+
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var audioIntent: Intent
+
+
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         setRecognizer() //음성 인식 세팅
 
         initSwi()
+
 
 
 

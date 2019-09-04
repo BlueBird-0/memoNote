@@ -1,16 +1,12 @@
 package com.example.testapplication
 
 import android.graphics.Canvas
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.R
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
-import android.R.attr.top
-import android.graphics.drawable.Drawable
 import android.util.TypedValue
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 
 
 class ItemTouchHelperCallBack(val adapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {

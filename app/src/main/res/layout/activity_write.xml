@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_cam"
             android:layout_width="56dp"
             android:layout_height="56dp"
@@ -23,7 +20,7 @@
             app:layout_constraintBottom_toTopOf="@+id/keyboard"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_mic"
             android:layout_width="56dp"
             android:layout_height="56dp"
@@ -42,7 +39,7 @@
             android:ems="10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/frameLayout2"
-            app:layout_constraintStart_toStartOf="parent"></EditText>
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <FrameLayout
             android:id="@+id/frameLayout2"
@@ -60,5 +57,5 @@
                 android:src="@drawable/ic_upload" />
         </FrameLayout>
 
-    </android.support.constraint.ConstraintLayout>
-</android.support.design.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

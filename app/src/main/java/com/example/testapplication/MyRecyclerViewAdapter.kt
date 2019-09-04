@@ -1,13 +1,11 @@
 package com.example.testapplication
 
-import android.arch.lifecycle.ViewModel
-import android.content.Context
-import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item.view.*
 import java.util.*
 

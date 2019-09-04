@@ -1,12 +1,10 @@
 package com.example.testapplication
 
 import android.content.Context
-import android.content.res.Configuration
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.KeyEvent
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_write.*
 
 class WriteActivity : AppCompatActivity() {
