@@ -1,8 +1,8 @@
 package com.example.testapplication
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import gun0912.tedbottompicker.TedBottomPicker
+import gun0912.tedbottompicker.TedBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -112,7 +114,17 @@ class MainActivity : AppCompatActivity() {
         mRecognizer.startListening(audioIntent)
     }
     private fun fab_cam() {
-
+        TedBottomPicker.with(this@MainActivity)
+                .setPeekHeight(1600)
+                .showTitle(false)
+                .setCompleteButtonText("Done")
+                .setEmptySelectionText("No Select")
+                //.setSelectedUriList(selectedUriList)
+                .showMultiImage(object : TedBottomSheetDialogFragment.OnMultiImageSelectedListener {
+                    override fun onImagesSelected(uriList: List<Uri>) {
+                        // here is selected image uri list
+                    }
+                })
     }
 
     private fun setRecognizer(){
