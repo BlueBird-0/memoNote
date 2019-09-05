@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_write.*
 
 class WriteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
         keyboard.requestFocus()
