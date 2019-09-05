@@ -6,7 +6,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.testapplication"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1
