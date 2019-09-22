@@ -13,8 +13,6 @@ class WriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
         keyboard.requestFocus()
-        //val imm : InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        //imm.showSoftInput(keyboard, 0)
 
         var aa : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         if (aa.isAcceptingText) {

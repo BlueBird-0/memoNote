@@ -3,12 +3,14 @@ package com.example.testapplication
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.BaseColumns
 import android.provider.Settings
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -29,14 +31,16 @@ import com.google.android.gms.ads.MobileAds
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private val PERMISSIONS_REQUEST_CODE = 1000
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var audioIntent: Intent
-
-
+    private val list = mutableListOf<ViewModel>()
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,14 +53,17 @@ class MainActivity : AppCompatActivity() {
         MobileAds.initialize(this)
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
-
-
         setRecognizer() //음성 인식 세팅
 
         initSwi()
 
 
+        /* writeNote test code */
+        var note = Note("첫번째 기록")
+        //데이터 쓰기
+        FeedReaderDbHelper.writeData(applicationContext, note)
 
+        readNotes()
 
         fab.setOnClickListener{}
         var touchListener = View.OnTouchListener{ view, motionEvent ->
@@ -111,6 +118,56 @@ class MainActivity : AppCompatActivity() {
             false
         }
         fab.setOnTouchListener(touchListener)
+    }
+
+    private fun readNotes() {
+        /* db 데이터 읽어오기 */
+        val dbHelper = FeedReaderDbHelper(applicationContext)
+        var db = dbHelper.readableDatabase
+
+        val projection = arrayOf(BaseColumns._ID, FeedEntry.COLUMNS_NOTE_CONTENT, FeedEntry.COLUMNS_NOTE_CREATED_TIME, FeedEntry.COLUMNS_NOTE_CHECKED_TIME, FeedEntry.COLUMNS_NOTE_PICTURE_URI)
+        //val selection = "${FeedEntry.COLUMN_NAME_TITLE} = ?"
+        //val selectionArgs = arrayOf("My Title")
+        val selectionArgs = arrayOf("%%")
+
+        //val sortOrder = "${FeedEntry.COLUMN_NAME_SUBTITLE} DESC"
+
+        val cursor = db.query(
+                FeedEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                null,//selection,              // The columns for the WHERE clause
+                null,     // The values for the WHERE clause
+                null,         // don't group the rows
+                null,           // don't filter by row groups
+                null               // The sort order
+        )
+
+        val itemIds = mutableListOf<Long>()
+        with(cursor){
+            Log.d("test001", "커서 시작됨")
+            while(moveToNext()){
+                val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
+                itemIds.add(itemId)
+
+                Log.d("test001", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+                Log.d("test001", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
+                Log.d("test001", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+                Log.d("test001", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+                Log.d("test001", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
+
+                val content = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}"))
+                val createdTime : Date? = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+                var checkedTime : Date?
+                if (cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")) == null) {
+                    checkedTime = null
+                }else {
+                    checkedTime = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+                }
+
+                //val pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
+                list.add(Note(content, createdTime, checkedTime, pictureUri = null))
+            }
+        }
     }
 
     private fun checkPermissions() {
@@ -196,28 +253,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initSwi(){
 
-        val list = mutableListOf<ViewModel>()
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-        list.add(Note("1번"))
-        list.add(Note("2번"))
-        list.add(Note("3번"))
-        list.add(Note("4번"))
-
         note_list.layoutManager = LinearLayoutManager(this)
         val adapter = MyRecyclerViewAdapter(list)
         note_list.adapter = adapter
@@ -225,6 +260,5 @@ class MainActivity : AppCompatActivity() {
         val itemTouchHelperCallBack = ItemTouchHelperCallBack(adapter)
         val touchHelper = ItemTouchHelper(itemTouchHelperCallBack)
         touchHelper.attachToRecyclerView(note_list)
-
     }
 }
