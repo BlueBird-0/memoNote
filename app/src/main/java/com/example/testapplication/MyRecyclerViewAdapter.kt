@@ -14,8 +14,8 @@ class ItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var titleView: TextView = itemView.item_content
     fun bind(beer: ViewModel) =
             with(itemView) {
-                val note = beer as Note
-                titleView.text = note.content
+                val noteViewModel = beer as NoteViewModel
+                titleView.text = noteViewModel.note.content
             }
 }
 class FooterViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
