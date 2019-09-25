@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
         var db = dbHelper.readableDatabase
 
         val projection = arrayOf(BaseColumns._ID, FeedEntry.COLUMNS_NOTE_CONTENT, FeedEntry.COLUMNS_NOTE_CREATED_TIME, FeedEntry.COLUMNS_NOTE_CHECKED_TIME, FeedEntry.COLUMNS_NOTE_PICTURE_URI)
-        //val selection = "${FeedEntry.COLUMN_NAME_TITLE} = ?"
+        val selection = "${FeedEntry.COLUMNS_NOTE_CHECKED_TIME} IS NULL"
         //val selectionArgs = arrayOf("My Title")
         val selectionArgs = arrayOf("%%")
 
@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
         val cursor = db.query(
                 FeedEntry.TABLE_NAME,   // The table to query
                 projection,             // The array of columns to return (pass null to get all)
-                null,//selection,              // The columns for the WHERE clause
+                selection,//selection,              // The columns for the WHERE clause
                 null,     // The values for the WHERE clause
                 null,         // don't group the rows
                 null,           // don't filter by row groups
@@ -272,7 +272,7 @@ class MainActivity : AppCompatActivity() {
     private fun initSwi(){
 
         note_list.layoutManager = LinearLayoutManager(this)
-        val adapter = MyRecyclerViewAdapter(list)
+        val adapter = MyRecyclerViewAdapter(applicationContext , list)
         note_list.adapter = adapter
 
         val itemTouchHelperCallBack = ItemTouchHelperCallBack(adapter)

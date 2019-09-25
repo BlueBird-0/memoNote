@@ -1,10 +1,8 @@
 package com.example.testapplication
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_write.*
 
@@ -16,9 +14,6 @@ class WriteActivity : AppCompatActivity() {
         keyboardEdit.requestFocus()
 
 //        var keyManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-
-
         fab_cam.setOnClickListener{}
         fab_mic.setOnClickListener{}
         uploadBtn.setOnClickListener{view->

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 import android.util.Log
 import java.text.SimpleDateFormat
+import java.util.*
 
 object FeedEntry : BaseColumns {
     val TABLE_NAME = "entry"
@@ -63,8 +64,42 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                 put(FeedEntry.COLUMNS_NOTE_PICTURE_URI, note.pictureUri.toString())
             }
             var db = dbHelper.writableDatabase
-            val newRowId = db.insert(FeedEntry.TABLE_NAME, null, values)
-            Log.d("test001", "글쓰기 실행 했음." + newRowId.toString())
+            db.insert(FeedEntry.TABLE_NAME, null, values)
+        }
+
+        fun checkData(context: Context, position: Int) {
+            /* db 데이터 읽어오기 */
+            val dbHelper = FeedReaderDbHelper(context)
+            var db = dbHelper.writableDatabase
+
+            val projection = arrayOf(BaseColumns._ID, FeedEntry.COLUMNS_NOTE_CONTENT, FeedEntry.COLUMNS_NOTE_CREATED_TIME, FeedEntry.COLUMNS_NOTE_CHECKED_TIME, FeedEntry.COLUMNS_NOTE_PICTURE_URI)
+            val selection = "${FeedEntry.COLUMNS_NOTE_CHECKED_TIME} IS NULL "
+            val cursor = db.query(
+                    FeedEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,//selection,              // The columns for the WHERE clause
+                    null,     // The values for the WHERE clause
+                    null,         // don't group the rows
+                    null,           // don't filter by row groups
+                    null               // The sort order
+            )
+
+            with(cursor){
+                Log.d("test001", "entered cursor : position : "+position)
+                move(position+1)  //해당 컬럼으로 이동
+                Log.d("test001", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+//                Log.d("test001", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
+//                Log.d("test001", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+//                Log.d("test001", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+//                Log.d("test001", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
+                val values = ContentValues().apply {
+                    put(FeedEntry.COLUMNS_NOTE_CHECKED_TIME, sdf.format(Date()))
+                }
+                val whereId = "${BaseColumns._ID} = ${cursor.getLong(getColumnIndex("${BaseColumns._ID}"))}"
+                db.update(FeedEntry.TABLE_NAME,  values,  whereId, null)
+                Log.d("test001", "업데이트 완료?")
+            }
+
         }
     }
 

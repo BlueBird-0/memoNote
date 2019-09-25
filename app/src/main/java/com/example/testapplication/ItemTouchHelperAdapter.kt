@@ -26,7 +26,7 @@ class ItemTouchHelperCallBack(val adapter: ItemTouchHelperAdapter) : ItemTouchHe
     //스와이프시 그림 그리기
     override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                .addBackgroundColor(ContextCompat.getColor(recyclerView.context, com.example.testapplication.R.color.check_green))
+                .addBackgroundColor(ContextCompat.getColor(recyclerView.context, com.example.testapplication.R.color.colorPrimaryDark))
                 //.addActionIcon(R.drawable.ic_delete)
                 .addSwipeRightActionIcon(R.drawable.ic_delete)
                 .addSwipeLeftActionIcon(R.drawable.ic_delete)
@@ -41,8 +41,10 @@ class ItemTouchHelperCallBack(val adapter: ItemTouchHelperAdapter) : ItemTouchHe
         return true
     }
 
+
     override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
-        adapter.onItemDismiss(p0.adapterPosition)    }
+        adapter.onItemDismiss(p0.adapterPosition)
+    }
 
 
     interface ItemTouchHelperAdapter {

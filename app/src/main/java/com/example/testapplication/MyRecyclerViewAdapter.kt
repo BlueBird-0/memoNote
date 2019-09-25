@@ -1,5 +1,7 @@
 package com.example.testapplication
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +23,7 @@ class ItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 class FooterViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 }
 
-class MyRecyclerViewAdapter(private val items: MutableList<ViewModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+class MyRecyclerViewAdapter(private val context: Context, private val items: MutableList<ViewModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         ItemTouchHelperCallBack.ItemTouchHelperAdapter {
     private val TYPE_ITEM = 1
     private val TYPE_FOOTER = 2
@@ -63,6 +65,10 @@ class MyRecyclerViewAdapter(private val items: MutableList<ViewModel>) : Recycle
 
     private fun deleteItem(position: Int) {
         items.removeAt(position)
+        Log.d("test001", "스와이프 삭제 ")
+        Log.d("test001", "Position : " + position)
+        FeedReaderDbHelper.checkData(context, position)
+
         notifyItemRemoved(position)
     }
 
