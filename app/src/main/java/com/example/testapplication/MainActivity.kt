@@ -130,10 +130,7 @@ class MainActivity : AppCompatActivity() {
 
         val projection = arrayOf(BaseColumns._ID, FeedEntry.COLUMNS_NOTE_CONTENT, FeedEntry.COLUMNS_NOTE_CREATED_TIME, FeedEntry.COLUMNS_NOTE_CHECKED_TIME, FeedEntry.COLUMNS_NOTE_PICTURE_URI)
         val selection = "${FeedEntry.COLUMNS_NOTE_CHECKED_TIME} IS NULL"
-        //val selectionArgs = arrayOf("My Title")
-        val selectionArgs = arrayOf("%%")
-
-        //val sortOrder = "${FeedEntry.COLUMN_NAME_SUBTITLE} DESC"
+        val sortOrder = "${FeedEntry.COLUMNS_NOTE_CREATED_TIME} ASC"
 
         val cursor = db.query(
                 FeedEntry.TABLE_NAME,   // The table to query
@@ -142,7 +139,7 @@ class MainActivity : AppCompatActivity() {
                 null,     // The values for the WHERE clause
                 null,         // don't group the rows
                 null,           // don't filter by row groups
-                null               // The sort order
+                sortOrder               // The sort order
         )
 
         val itemIds = mutableListOf<Long>()

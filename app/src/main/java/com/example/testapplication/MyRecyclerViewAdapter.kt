@@ -65,16 +65,17 @@ class MyRecyclerViewAdapter(private val context: Context, private val items: Mut
 
     private fun deleteItem(position: Int) {
         items.removeAt(position)
-        Log.d("test001", "스와이프 삭제 ")
-        Log.d("test001", "Position : " + position)
-        FeedReaderDbHelper.checkData(context, position)
+        FeedReaderDbHelper.checkData(context, position+1)
 
         notifyItemRemoved(position)
     }
 
 
     private fun swapItems(positionFrom: Int, positionTo: Int) {
-        Collections.swap(items, positionFrom, positionTo)
+        //Collections.swap(items, positionFrom, positionTo)
+        FeedReaderDbHelper.swapData( context, positionFrom, positionTo)
+        Log.d("test001", "PositionFrom: "+ positionFrom)
+        Log.d("test001", "PositionTo : " + positionTo)
         notifyItemMoved(positionFrom, positionTo)
     }
 
