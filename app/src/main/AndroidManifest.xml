@@ -34,6 +34,10 @@
         </activity>
         <activity android:name="com.example.testapplication.WriteActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.example.testapplication.RecordActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.example.testapplication.OptionActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

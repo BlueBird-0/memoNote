@@ -3,7 +3,6 @@ package com.example.testapplication
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,7 +22,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -32,8 +30,6 @@ import com.google.android.gms.ads.MobileAds
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -51,15 +47,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //initialize
         checkPermissions()
         //ADDMOB
         MobileAds.initialize(this)
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
+
+
+
         setRecognizer() //음성 인식 세팅
-
         initSwi()
-
         readNotes()
 
         fab.setOnClickListener{}
@@ -117,10 +115,29 @@ class MainActivity : AppCompatActivity() {
             false
         }
         fab.setOnTouchListener(touchListener)
+
+
+        btn_rec()
+        btn_set()
     }
 
 
-
+    private fun btn_rec() {
+        btn_rec.setOnClickListener {
+            val recordActivity = Intent(this, RecordActivity::class.java)
+            startActivity(recordActivity)
+//            startActivityForResult(writeIntent, WRITE_NOTE_REQUEST_CODE)
+            overridePendingTransition(R.anim.left_activity, R.anim.hold_activity)
+        }
+    }
+    private fun btn_set() {
+        btn_set.setOnClickListener {
+            val optionActivity = Intent(this, OptionActivity::class.java)
+            startActivity(optionActivity)
+//            startActivityForResult(writeIntent, WRITE_NOTE_REQUEST_CODE)
+            overridePendingTransition(R.anim.right_activity, R.anim.hold_activity)
+        }
+    }
 
 
     private fun readNotes() {
@@ -259,8 +276,6 @@ class MainActivity : AppCompatActivity() {
             {
                 var addedNote = NoteViewModel(data!!.getParcelableExtra<Note>("note"))
                 list.add(addedNote)
-
-                //readNotes()
                 //새로고침
             }
         }

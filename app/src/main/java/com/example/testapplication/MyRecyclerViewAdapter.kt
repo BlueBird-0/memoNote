@@ -72,10 +72,10 @@ class MyRecyclerViewAdapter(private val context: Context, private val items: Mut
 
 
     private fun swapItems(positionFrom: Int, positionTo: Int) {
-        //Collections.swap(items, positionFrom, positionTo)
-        FeedReaderDbHelper.swapData( context, positionFrom, positionTo)
         Log.d("test001", "PositionFrom: "+ positionFrom)
         Log.d("test001", "PositionTo : " + positionTo)
+        //Collections.swap(items, positionFrom, positionTo)
+        FeedReaderDbHelper.swapData( context, positionFrom, positionTo)
         notifyItemMoved(positionFrom, positionTo)
     }
 
