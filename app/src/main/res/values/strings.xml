@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">TestApplication</string>
+
+    <string name="app_done">Done</string>
+    <string name="app_connect">Connect</string>
+
+    <string name="option_title_synchronization">동기화</string>
+    <string name="option_title_access">접근성</string>
+
+    <string name="option_kakaoLogin">카카오 계정 연동</string>
+    <string name="option_autoUpload">클라우드 자동올리기</string>
+    <string name="option_pc">PC(Window &amp; Mac)</string>
+
+    <string name="option_widget">위젯</string>
+    <string name="option_autoExecution">자동실행</string>
+    <string name="option_hold">잠금화면</string>
+    <string name="option_statusBar">상태 바</string>
+
 </resources>
