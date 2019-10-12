@@ -38,6 +38,15 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name="com.example.testapplication.OptionActivity"
             android:windowSoftInputMode="adjustResize"/>
+
+        <receiver android:name=".accessibility.Starter"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON"/>
+            </intent-filter>
+        </receiver>
+        <service android:enabled="true"
+            android:name=".accessibility.backgroundService"/>
     </application>
 
 </manifest>

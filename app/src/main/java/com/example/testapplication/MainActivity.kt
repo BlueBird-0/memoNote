@@ -3,10 +3,15 @@ package com.example.testapplication
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.BaseColumns
@@ -21,9 +26,12 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.testapplication.accessibility.backgroundService
 
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -41,6 +49,38 @@ class MainActivity : AppCompatActivity() {
     private val list = mutableListOf<ViewModel>()
 
 
+
+    private fun notification () : NotificationCompat.Builder {
+
+        var intent = Intent(applicationContext, MainActivity::class.java)
+        var pendingIntent = PendingIntent.getActivity(applicationContext, 1, intent, 0)
+
+        val CHANNEL_ID = "ChannelID"
+        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_footprint)
+                .setContentTitle(getString(R.string.app_name))
+                //.setContentText("textContent")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+
+//        return builder
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "ChannelName"
+            val descriptionText = "ChannelDiscription"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance). apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+
+        }
+        return builder
+    }
+
+
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -54,6 +94,12 @@ class MainActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
 
+        //testcode
+        startService(Intent(applicationContext, backgroundService::class.java))
+        with(NotificationManagerCompat.from(this)) {
+            Log.d("test001", "notify()")
+            notify(100685, notification().build())
+        }
 
 
         setRecognizer() //음성 인식 세팅
