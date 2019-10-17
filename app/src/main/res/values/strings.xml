@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestApplication</string>
+    <string name="app_name">단기메모</string>
 
     <string name="app_done">Done</string>
     <string name="app_connect">Connect</string>

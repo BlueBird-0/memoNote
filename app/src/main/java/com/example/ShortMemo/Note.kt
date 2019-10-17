@@ -1,8 +1,6 @@
-package com.example.testapplication
+package com.example.ShortMemo
 
-import android.content.ClipData
 import android.net.Uri
-import android.os.Parcel
 import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import kotlinx.android.parcel.Parcelize

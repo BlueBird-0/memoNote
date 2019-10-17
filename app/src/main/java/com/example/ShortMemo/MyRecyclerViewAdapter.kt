@@ -1,4 +1,4 @@
-package com.example.testapplication
+package com.example.ShortMemo
 
 import android.content.Context
 import android.util.Log
@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item.view.*
-import java.util.*
 
 // 아이템 리스트
 class ItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.testapplication">
+    package="com.example.ShortMemo">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name ="androidx.multidex.MultiDexApplication"
@@ -23,7 +24,7 @@
             android:value="ca-app-pub-8004776504808264~7066223224"/>
 
         <activity
-            android:name="com.example.testapplication.MainActivity"
+            android:name="com.example.ShortMemo.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize"
             android:label="@string/app_name">
@@ -32,21 +33,24 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.example.testapplication.WriteActivity"
+        <activity android:name="com.example.ShortMemo.WriteActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.example.testapplication.RecordActivity"
+        <activity android:name="com.example.ShortMemo.RecordActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.example.testapplication.OptionActivity"
+        <activity android:name="com.example.ShortMemo.OptionActivity"
             android:windowSoftInputMode="adjustResize"/>
 
-        <receiver android:name=".accessibility.Starter"
+        <receiver android:name="com.example.ShortMemo.accessibility.Starter"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.SCREEN_ON"/>
             </intent-filter>
         </receiver>
         <service android:enabled="true"
-            android:name=".accessibility.backgroundService"/>
+            android:name="com.example.ShortMemo.accessibility.BackgroundService"/>
+        <service android:enabled="true"
+            android:exported="false"
+            android:name="com.example.ShortMemo.accessibility.FloatingViewService"/>
     </application>
 
 </manifest>

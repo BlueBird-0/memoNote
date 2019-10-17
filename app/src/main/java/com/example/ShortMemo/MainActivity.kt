@@ -1,11 +1,8 @@
-package com.example.testapplication
+package com.example.ShortMemo
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -27,11 +24,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.testapplication.accessibility.backgroundService
+import com.example.ShortMemo.accessibility.FloatingViewService
+import com.example.ShortMemo.accessibility.BackgroundService
 
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -95,11 +92,31 @@ class MainActivity : AppCompatActivity() {
         adView.loadAd(adRequest)
 
         //testcode
-        startService(Intent(applicationContext, backgroundService::class.java))
-        with(NotificationManagerCompat.from(this)) {
-            Log.d("test001", "notify()")
-            notify(100685, notification().build())
+
+
+
+
+        //TODO Notification
+        Log.d("test001", "isServiceRunning : " + isServiceRunning(FloatingViewService::class.java))
+        if(! isServiceRunning(FloatingViewService::class.java)) {
+            startService(Intent(applicationContext, BackgroundService::class.java))
         }
+//        with(NotificationManagerCompat.from(this)) {
+//            Log.d("test001", "notify()")
+//            notify(100685, notification().build())
+//        }
+
+
+        //TODO Floating View
+//        //Floating View 권한 체크
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+//            val CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084
+//            var intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//                    Uri.parse("package:" + packageName))
+//            startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION)
+//        }
+//        //Floating View 실행
+//        startService(Intent(applicationContext, FloatingViewService::class.java))
 
 
         setRecognizer() //음성 인식 세팅
@@ -165,6 +182,15 @@ class MainActivity : AppCompatActivity() {
 
         btn_rec()
         btn_set()
+    }
+
+    private fun isServiceRunning(serviceClass : Class<*>): Boolean {
+        var manager = this.getSystemService(Activity.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Integer.MAX_VALUE) ) {
+            if(serviceClass.name == service.service.className)
+                return true
+        }
+        return false
     }
 
 

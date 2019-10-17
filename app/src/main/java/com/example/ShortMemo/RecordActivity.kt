@@ -1,4 +1,4 @@
-package com.example.testapplication
+package com.example.ShortMemo
 
 import android.content.Intent
 import android.os.Bundle

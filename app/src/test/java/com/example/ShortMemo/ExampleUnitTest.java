@@ -1,4 +1,4 @@
-package com.example.testapplication;
+package com.example.ShortMemo;
 
 import org.junit.Test;
 

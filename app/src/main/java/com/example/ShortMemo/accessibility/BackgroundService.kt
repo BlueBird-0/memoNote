@@ -1,4 +1,4 @@
-package com.example.testapplication.accessibility
+package com.example.ShortMemo.accessibility
 
 import android.app.Service
 import android.content.Intent
@@ -6,7 +6,7 @@ import android.content.IntentFilter
 import android.os.IBinder
 import android.util.Log
 
-class backgroundService : Service() {
+class BackgroundService : Service() {
     var receiver = Starter()
     override fun onBind(intent: Intent?): IBinder? {
         return null
