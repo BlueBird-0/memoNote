@@ -54,13 +54,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView3">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/button1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_button"
+                    android:background="@drawable/background_circle"
                     android:backgroundTint="@android:color/holo_orange_light"
                     android:text="K"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -74,7 +74,7 @@
                     android:layout_marginStart="10dp"
                     android:text="@string/option_kakaoLogin"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button"
+                    app:layout_constraintStart_toEndOf="@+id/button1"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -112,7 +112,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_button"
+                    android:background="@drawable/background_circle"
                     android:backgroundTint="@android:color/holo_orange_light"
                     android:text="A"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -165,7 +165,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_button"
+                    android:background="@drawable/background_circle"
                     android:backgroundTint="@android:color/holo_orange_light"
                     android:text="P"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -214,13 +214,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView7">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/button4"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_button"
+                    android:background="@drawable/background_circle"
                     android:backgroundTint="@android:color/holo_orange_light"
                     android:text="K"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -236,16 +236,7 @@
                     android:layout_marginBottom="10dp"
                     android:text="@string/option_widget"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Switch
-                    android:id="@+id/switch2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/button4"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <FrameLayout
@@ -265,34 +256,44 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
-                <Button
-                    android:id="@+id/button"
+                <FrameLayout
+                    android:id="@+id/frameLayout"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_button"
-                    android:backgroundTint="@android:color/holo_orange_light"
-                    android:text="K"
+                    android:background="@drawable/background_circle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="6dp"
+                        android:src="@drawable/ic_app"
+                        android:tint="@android:color/black"
+                        app:srcCompat="@drawable/ic_app" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/option_hold"
+                    android:text="@string/option_windowShortcut"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/frameLayout"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.538" />
 
                 <Switch
-                    android:id="@+id/switch3"
+                    android:id="@+id/switch_windowShortcut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
@@ -317,19 +318,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
 
-                <Button
-                    android:id="@+id/button"
+                <FrameLayout
+                    android:id="@+id/frameLayout3"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_button"
-                    android:backgroundTint="@android:color/holo_orange_light"
-                    android:text="K"
+                    android:background="@drawable/background_circle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_statusbar"
+                        android:src="@drawable/ic_statusbar"
+                        android:tint="@android:color/black"
+                        android:layout_gravity="center"
+                        android:layout_margin="6dp"/>
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/textView10"
@@ -338,11 +348,11 @@
                     android:layout_marginStart="10dp"
                     android:text="@string/option_statusBar"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button"
+                    app:layout_constraintStart_toEndOf="@+id/frameLayout3"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Switch
-                    android:id="@+id/switch4"
+                    android:id="@+id/switch_statusbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
@@ -368,19 +378,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
 
-                <Button
-                    android:id="@+id/button"
+
+                <FrameLayout
+                    android:id="@+id/frameLayout2"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_button"
-                    android:backgroundTint="@android:color/holo_orange_light"
-                    android:text="K"
+                    android:background="@drawable/background_circle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_autoexec"
+                        android:src="@drawable/ic_autoexec"
+                        android:tint="@android:color/black"
+                        android:layout_gravity="center"
+                        android:layout_margin="6dp"/>
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/textView11"
@@ -389,11 +409,11 @@
                     android:layout_marginStart="10dp"
                     android:text="@string/option_autoExecution"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button"
+                    app:layout_constraintStart_toEndOf="@+id/frameLayout2"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Switch
-                    android:id="@+id/switch5"
+                    android:id="@+id/switch_autoexec"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
@@ -408,6 +428,8 @@
                     app:layout_constraintBottom_toBottomOf="parent">
 
                 </FrameLayout>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -457,28 +479,6 @@
             app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline4" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_cam"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="25dp"
-            android:src="@drawable/ic_cam"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:rippleColor="@color/rippleClickedColor"
-            tools:layout_editor_absoluteY="629dp" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_mic"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="25dp"
-            android:src="@drawable/ic_mic"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/guideline4"
-            app:rippleColor="@color/rippleClickedColor"
-            tools:layout_editor_absoluteY="629dp" />
 
 
         <androidx.constraintlayout.widget.Guideline

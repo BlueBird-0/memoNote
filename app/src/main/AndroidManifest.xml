@@ -40,7 +40,9 @@
         <activity android:name="com.example.ShortMemo.OptionActivity"
             android:windowSoftInputMode="adjustResize"/>
 
-        <receiver android:name="com.example.ShortMemo.accessibility.Starter"
+
+
+        <receiver android:name="com.example.ShortMemo.accessibility.BroadcastReceiverApp"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.SCREEN_ON"/>
