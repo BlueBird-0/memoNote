@@ -27,10 +27,9 @@ class ItemTouchHelperCallBack(val adapter: ItemTouchHelperAdapter) : ItemTouchHe
     override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 .addBackgroundColor(ContextCompat.getColor(recyclerView.context, com.example.ShortMemo.R.color.colorPrimaryDark))
-                //.addActionIcon(R.drawable.ic_delete)
-                .addSwipeRightActionIcon(R.drawable.ic_delete)
-                .addSwipeLeftActionIcon(R.drawable.ic_delete)
-                .setIconHorizontalMargin(TypedValue.COMPLEX_UNIT_DIP, 3)
+                .addSwipeRightActionIcon(com.example.ShortMemo.R.drawable.ic_check)
+                .addSwipeLeftActionIcon(com.example.ShortMemo.R.drawable.ic_check)
+                .setIconHorizontalMargin(TypedValue.COMPLEX_UNIT_DIP, 20)
                 .create()
                 .decorate()
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
