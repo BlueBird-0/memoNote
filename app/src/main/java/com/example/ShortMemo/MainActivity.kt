@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ShortMemo.accessibility.BackgroundService
+import com.example.ShortMemo.record.RecordActivity
 
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds

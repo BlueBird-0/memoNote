@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import com.example.ShortMemo.accessibility.FloatingViewService
 import com.example.ShortMemo.accessibility.FunNotification
+import com.example.ShortMemo.record.RecordActivity
 import com.google.android.gms.ads.AdRequest
 import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec

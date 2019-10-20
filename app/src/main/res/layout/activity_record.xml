@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/list_widget_item">
+            tools:listitem="@layout/list_record_item">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -69,31 +69,6 @@
             app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline4" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_cam"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_cam"
-            app:rippleColor="@color/rippleClickedColor"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/note_list"
-            app:layout_constraintStart_toStartOf="@+id/guideline4" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_mic"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_mic"
-            android:visibility="gone"
-            app:rippleColor="@color/rippleClickedColor"
-            app:layout_constraintBottom_toBottomOf="@+id/note_list"
-            app:layout_constraintBottom_toTopOf="@+id/btn_set"
-            app:layout_constraintEnd_toStartOf="@+id/guideline4" />
 
 
         <androidx.constraintlayout.widget.Guideline
