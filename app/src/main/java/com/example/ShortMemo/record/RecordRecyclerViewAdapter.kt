@@ -13,20 +13,41 @@ import kotlinx.android.synthetic.main.list_item.view.*
 import kotlinx.android.synthetic.main.list_item.view.item_content
 import kotlinx.android.synthetic.main.list_record_item.view.*
 import java.text.SimpleDateFormat
+import java.util.*
+
+private var prev = object{ var previousTimeStr : String = "" }  //singleton
 
 // 아이템 리스트
 class RecordItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
     private var titleView: TextView = itemView.item_content
     private var checkedTime: TextView = itemView.item_checkedTime
+
     fun bind(beer: ViewModel) =
             with(itemView) {
                 val noteViewModel = beer as NoteViewModel
                 titleView.text = noteViewModel.note.content
 
-                val sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS")
-                checkedTime.text = sdf.format(noteViewModel.note.createdTime)
 
+                checkedTime.text = getCheckedTimeText(noteViewModel)
             }
+
+    //날자별 텍스트 불러오기 (디자인 필요)
+    fun getCheckedTimeText(noteViewModel : NoteViewModel) : String {
+        Log.d("test001", "prevTimeStr : "+ prev.previousTimeStr)
+
+
+        //val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS")
+        val sdf: SimpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+        val checkedTimeStr= sdf.format(noteViewModel.note.checkedTime)
+
+        if(prev.previousTimeStr.equals( checkedTimeStr) == false) {
+            prev.previousTimeStr = checkedTimeStr
+            return checkedTimeStr
+        }
+
+        return ""
+    }
+
 }
 class FooterViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 }
@@ -38,6 +59,8 @@ class RecordRecyclerViewAdapter(private val context: Context, private val items:
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        Log.d("test001", "bind test")
+
         if(holder is RecordItemViewHolder) {
             holder.bind(items[position])
         }else {

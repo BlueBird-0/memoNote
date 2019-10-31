@@ -15,6 +15,7 @@
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="8dp"
         android:text="RecordText"
+        android:maxLines="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_checkedTime"
         app:layout_constraintStart_toStartOf="parent"

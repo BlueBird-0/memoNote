@@ -2,6 +2,8 @@ package com.example.ShortMemo.record
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.BaseColumns
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,9 +16,7 @@ import java.util.*
 
 
 class RecordActivity: AppCompatActivity() {
-
     private val list = mutableListOf<ViewModel>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -33,13 +33,55 @@ class RecordActivity: AppCompatActivity() {
         btn_rec()
         btn_set()
 
+        readNotes()
+    }
 
-        var noteVM = NoteViewModel(Note("content123"))
-        noteVM.note.checkedTime = Date()
+    private fun readNotes() {
+        /* db 데이터 읽어오기 */
+        val dbHelper = FeedReaderDbHelper(applicationContext)
+        var db = dbHelper.readableDatabase
 
-        list.add(noteVM)
-        list.add(noteVM)
-        list.add(noteVM)
+        val projection = arrayOf(BaseColumns._ID, FeedEntry.COLUMNS_NOTE_CONTENT, FeedEntry.COLUMNS_NOTE_CREATED_TIME, FeedEntry.COLUMNS_NOTE_CHECKED_TIME, FeedEntry.COLUMNS_NOTE_PICTURE_URI)
+        val selection = "${FeedEntry.COLUMNS_NOTE_CHECKED_TIME} IS NOT NULL"
+        val sortOrder = "${FeedEntry.COLUMNS_NOTE_CHECKED_TIME} DESC"
+
+        val cursor = db.query(
+                FeedEntry.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,//selection,              // The columns for the WHERE clause
+                null,     // The values for the WHERE clause
+                null,         // don't group the rows
+                null,           // don't filter by row groups
+                sortOrder               // The sort order
+        )
+
+        val itemIds = mutableListOf<Long>()
+        with(cursor){
+            Log.d("test001", "커서 시작됨")
+            while(moveToNext()){
+                val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
+                itemIds.add(itemId)
+
+                Log.d("test001", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+                Log.d("test001", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
+                Log.d("test001", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+                Log.d("test001", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+                Log.d("test001", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
+
+                val content = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}"))
+                val createdTime : Date? = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+                var checkedTime : Date?
+                if (cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")) == null) {
+                    checkedTime = null
+                }else {
+                    checkedTime = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+                }
+
+                var noteVM = NoteViewModel(Note(content, createdTime, checkedTime, pictureUri = null))
+                //val pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
+                list.add(noteVM)
+            }
+        }
     }
 
 
