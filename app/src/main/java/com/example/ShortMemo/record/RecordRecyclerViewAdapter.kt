@@ -33,9 +33,6 @@ class RecordItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) 
 
     //날자별 텍스트 불러오기 (디자인 필요)
     fun getCheckedTimeText(noteViewModel : NoteViewModel) : String {
-        Log.d("test001", "prevTimeStr : "+ prev.previousTimeStr)
-
-
         //val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS")
         val sdf: SimpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
         val checkedTimeStr= sdf.format(noteViewModel.note.checkedTime)
@@ -59,8 +56,6 @@ class RecordRecyclerViewAdapter(private val context: Context, private val items:
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.d("test001", "bind test")
-
         if(holder is RecordItemViewHolder) {
             holder.bind(items[position])
         }else {
@@ -103,8 +98,6 @@ class RecordRecyclerViewAdapter(private val context: Context, private val items:
 
 
     private fun swapItems(positionFrom: Int, positionTo: Int) {
-        Log.d("test001", "PositionFrom: "+ positionFrom)
-        Log.d("test001", "PositionTo : " + positionTo)
         //Collections.swap(items, positionFrom, positionTo)
         FeedReaderDbHelper.swapData(context, positionFrom, positionTo)
         notifyItemMoved(positionFrom, positionTo)

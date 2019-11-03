@@ -10,7 +10,7 @@ import com.example.ShortMemo.R
 
 class BroadcastReceiverApp : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
-        Log.d("test001", "Called BroadcastReceiverApp! set Start Service  action:[ " + intent?.action+"]")
+        Log.d("Test001_Broadcast", "Called BroadcastReceiverApp! set Start Service  action:[ " + intent?.action+"]")
 
         val sharedPref = context.getSharedPreferences(context.getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
         val action = intent?.action

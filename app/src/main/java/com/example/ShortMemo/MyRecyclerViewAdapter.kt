@@ -1,22 +1,45 @@
 package com.example.ShortMemo
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.provider.BaseColumns
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item.view.*
 
 // 아이템 리스트
 class ItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    private var layout: ConstraintLayout = itemView.item_mainLayout
     private var titleView: TextView = itemView.item_content
     fun bind(beer: ViewModel) =
             with(itemView) {
                 val noteViewModel = beer as NoteViewModel
                 titleView.text = noteViewModel.note.content
+                layout.setOnClickListener(View.OnClickListener {
+                    Log.d( "Test001_Recycler", "Note_Id:  "+noteViewModel.note.id.toString())
+                    Log.d( "Test001_Recycler", "Note_Content:  "+noteViewModel.note.content)
+                    Log.d( "Test001_Recycler", "Note_CreateTime:  "+noteViewModel.note.createdTime)
+                    Log.d( "Test001_Recycler", "Note_checkedTime:  "+noteViewModel.note.checkedTime)
+                    Log.d( "Test001_Recycler", "Note_pictureUri:  "+noteViewModel.note.pictureUri)
+
+
+                    val writeIntent = Intent(context, WriteActivity::class.java)
+                    writeIntent.putExtra(BaseColumns._ID, noteViewModel.note.id)
+                    val mainActivity = context as Activity
+                    mainActivity.startActivityForResult(writeIntent, MainActivity.UPDATE_NOTE_REQUEST_CODE, null)
+                    mainActivity.overridePendingTransition(R.anim.open_activity, R.anim.hold_activity)
+                })
+
             }
 }
 class FooterViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -71,8 +94,8 @@ class MyRecyclerViewAdapter(private val context: Context, private val items: Mut
 
 
     private fun swapItems(positionFrom: Int, positionTo: Int) {
-        Log.d("test001", "PositionFrom: "+ positionFrom)
-        Log.d("test001", "PositionTo : " + positionTo)
+        Log.d("Test001_Swap", "PositionFrom: "+ positionFrom)
+        Log.d("Test001_Swap", "PositionTo : " + positionTo)
         //Collections.swap(items, positionFrom, positionTo)
         FeedReaderDbHelper.swapData( context, positionFrom, positionTo)
         notifyItemMoved(positionFrom, positionTo)

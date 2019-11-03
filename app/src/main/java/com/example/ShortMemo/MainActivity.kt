@@ -39,8 +39,12 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    private val PERMISSIONS_REQUEST_CODE = 1000
-    private val WRITE_NOTE_REQUEST_CODE = 1001
+    companion object {
+        val PERMISSIONS_REQUEST_CODE = 1000
+        val WRITE_NOTE_REQUEST_CODE = 1001
+        val UPDATE_NOTE_REQUEST_CODE = 1002
+    }
+
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var audioIntent: Intent
     private val list = mutableListOf<ViewModel>()
@@ -64,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //TODO Notification
-        Log.d("test001", "isServiceRunning : " + isServiceRunning(BackgroundService::class.java))
+        Log.d("Test001_service", "isServiceRunning : " + isServiceRunning(BackgroundService::class.java))
         if(! isServiceRunning(BackgroundService::class.java)) {
             startService(Intent(applicationContext, BackgroundService::class.java))
         }
@@ -179,24 +183,25 @@ class MainActivity : AppCompatActivity() {
                 projection,             // The array of columns to return (pass null to get all)
                 selection,//selection,              // The columns for the WHERE clause
                 null,     // The values for the WHERE clause
-                null,         // don't group the rows
+                null,         // don't group the rowss
                 null,           // don't filter by row groups
                 sortOrder               // The sort order
         )
 
         val itemIds = mutableListOf<Long>()
         with(cursor){
-            Log.d("test001", "커서 시작됨")
+            Log.d("MainActivitys", "커서 시작됨")
             while(moveToNext()){
                 val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
                 itemIds.add(itemId)
 
-                Log.d("test001", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
-                Log.d("test001", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
-                Log.d("test001", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
-                Log.d("test001", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
-                Log.d("test001", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
+                Log.d("MainActivity", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+                Log.d("MainActivity", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
+                Log.d("MainActivity", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+                Log.d("MainActivity", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+                Log.d("MainActivity", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
 
+                val id = cursor.getLong(getColumnIndex("${BaseColumns._ID}"))
                 val content = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}"))
                 val createdTime : Date? = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
                 var checkedTime : Date?
@@ -206,7 +211,7 @@ class MainActivity : AppCompatActivity() {
                     checkedTime = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
                 }
 
-                var noteVM = NoteViewModel(Note(content, createdTime, checkedTime, pictureUri = null))
+                var noteVM = NoteViewModel(Note(id, content, createdTime, checkedTime, pictureUri = null))
                 //val pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
                 list.add(noteVM)
             }
@@ -295,13 +300,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == WRITE_NOTE_REQUEST_CODE)
-        {
-            if(resultCode == Activity.RESULT_OK)
-            {
-                var addedNote = NoteViewModel(data!!.getParcelableExtra<Note>("note"))
-                list.add(addedNote)
-                //새로고침
+        when(requestCode) {
+            WRITE_NOTE_REQUEST_CODE -> {
+                if(resultCode == Activity.RESULT_OK)
+                {
+                    var addedNote = NoteViewModel(data!!.getParcelableExtra<Note>("note"))
+                    list.add(addedNote)
+                    //새로고침
+                }
+            }
+            UPDATE_NOTE_REQUEST_CODE -> {
+                if(resultCode == Activity.RESULT_OK)
+                {
+                    list.removeAll(list)
+                    readNotes()
+                }
             }
         }
     }

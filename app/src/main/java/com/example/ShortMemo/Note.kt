@@ -8,6 +8,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 @Parcelize
-data class Note (var content:String, var createdTime:Date? = Date(), var checkedTime:Date? = null, var pictureUri : ArrayList<Uri>? = null) : Parcelable
+data class Note (var id: Long, var content:String, var createdTime:Date? = Date(), var checkedTime:Date? = null, var pictureUri : ArrayList<Uri>? = null) : Parcelable
 
 class NoteViewModel(val note : Note): ViewModel()

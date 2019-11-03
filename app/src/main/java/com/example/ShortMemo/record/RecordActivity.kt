@@ -57,17 +57,18 @@ class RecordActivity: AppCompatActivity() {
 
         val itemIds = mutableListOf<Long>()
         with(cursor){
-            Log.d("test001", "커서 시작됨")
+            Log.d("Test001_RecordActivity", "커서 시작됨")
             while(moveToNext()){
                 val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
                 itemIds.add(itemId)
 
-                Log.d("test001", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
-                Log.d("test001", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
-                Log.d("test001", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
-                Log.d("test001", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
-                Log.d("test001", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
+                Log.d("Test001_RecordActivity", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+                Log.d("Test001_RecordActivity", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
+                Log.d("Test001_RecordActivity", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+                Log.d("Test001_RecordActivity", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+                Log.d("Test001_RecordActivity", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
 
+                val id = cursor.getLong(getColumnIndex("${BaseColumns._ID}"))
                 val content = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}"))
                 val createdTime : Date? = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
                 var checkedTime : Date?
@@ -77,7 +78,7 @@ class RecordActivity: AppCompatActivity() {
                     checkedTime = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
                 }
 
-                var noteVM = NoteViewModel(Note(content, createdTime, checkedTime, pictureUri = null))
+                var noteVM = NoteViewModel(Note(id, content, createdTime, checkedTime, pictureUri = null))
                 //val pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
                 list.add(noteVM)
             }

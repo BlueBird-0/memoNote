@@ -33,12 +33,12 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE_ENTRIES)
-        Log.d("test001", "DB 생성 완료")
+        Log.d("Test001_DB", "DB 생성 완료")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL(SQL_DELETE__ENTRIES)
-        Log.d("test001", "DB 업그레이드")
+        Log.d("Test001_DB", "DB 업그레이드")
         onCreate(db)
     }
 
@@ -52,7 +52,7 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
         const val DATABASE_NAME = "FeedReader.db"
         val sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS")
 
-        fun writeData(context: Context, note: Note) {
+        fun writeData(context: Context, note: Note) : Long{
             //데이터 쓰기
             val dbHelper = FeedReaderDbHelper(context)
             val values = ContentValues().apply {
@@ -64,8 +64,23 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                 put(FeedEntry.COLUMNS_NOTE_PICTURE_URI, note.pictureUri.toString())
             }
             val db = dbHelper.writableDatabase
-            db.insert(FeedEntry.TABLE_NAME, null, values)
+            return db.insert(FeedEntry.TABLE_NAME, null, values)
         }
+        fun updateData(context: Context, note: Note, id: Long) {
+            /* db 데이터 업데이트 */
+            val dbHelper = FeedReaderDbHelper(context)
+            val values = ContentValues().apply {
+                put(FeedEntry.COLUMNS_NOTE_CONTENT, note.content)
+                if (note.createdTime != null)
+                    put(FeedEntry.COLUMNS_NOTE_CREATED_TIME, sdf.format(note?.createdTime))
+                if (note.checkedTime != null)
+                    put(FeedEntry.COLUMNS_NOTE_CHECKED_TIME, sdf.format(note?.checkedTime))
+                put(FeedEntry.COLUMNS_NOTE_PICTURE_URI, note.pictureUri.toString())
+            }
+            val db = dbHelper.writableDatabase
+            db.update(FeedEntry.TABLE_NAME, values, "${BaseColumns._ID} = ${id}", null)
+        }
+
 
         fun checkData(context: Context, position: Int) {
             /* db 데이터 읽어오기 */
@@ -85,7 +100,7 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
             )
             with(cursor){
                 move(position)  //해당 컬럼으로 이동
-                Log.d("test001", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+                Log.d("Test001_DB", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
                 val values = ContentValues().apply {
                     put(FeedEntry.COLUMNS_NOTE_CHECKED_TIME, sdf.format(Date()))
                 }
@@ -119,10 +134,10 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
 
                 moveToPosition(swapPositionFrom)  //해당 컬럼으로 이동
                 val From_Id = cursor.getLong(getColumnIndex("${BaseColumns._ID}"))
-                Log.d("test001", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
+                Log.d("Test001_DB", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
 
                 moveToPosition(swapPositionTo)  //해당 컬럼으로 이동
-                Log.d("test001", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
+                Log.d("Test001_DB", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
                 val To_createdTime = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}"))
 //                Log.d("test001", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
 
@@ -130,21 +145,17 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
 
                 var diffTime : Long = 0
 
-                Log.d("test001", "count : ${cursor.count}")
+                Log.d("Test001_DB", "count : ${cursor.count}")
                 if(swapPositionFrom < swapPositionTo) { //위에서 아래로 스왑
-                    Log.d("test001", "----------1번 실행")
                     diffTime = 1000
                     if(swapPositionTo+1 <= cursor.count-1) {      //더 밑에 블록이 있을 때
-                        Log.d("test001", "----------2번 실행")
                         moveToPosition(swapPositionTo +1)
                         val ToUnder_createdTime = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}"))
                         diffTime = (sdf.parse(ToUnder_createdTime).time - sdf.parse(To_createdTime).time) /2
                     }
                 }else if (swapPositionFrom > swapPositionTo) { //아래에서 위로 스왑
                     diffTime = -1000
-                    Log.d("test001", "----------3번 실행")
                     if(swapPositionTo-1 >= 0) {    //더 위에 블록이 있을 때
-                        Log.d("test001", "----------4번 실행")
                         moveToPosition(swapPositionTo -1)
                         val ToOver_createdTime = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}"))
                         diffTime = (sdf.parse(ToOver_createdTime).time - sdf.parse(To_createdTime).time) /2
@@ -152,16 +163,13 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                 }
 
                 val changedTime = sdf.parse(To_createdTime)
-                Log.d("test001", "originTime : "+changedTime +"---"+ sdf.format(changedTime))
                 changedTime.time = changedTime.time+ diffTime
-                Log.d("test001", "changedTime : "+changedTime +"---"+ sdf.format(changedTime))
 
                 val values = ContentValues().apply {
                     put(FeedEntry.COLUMNS_NOTE_CREATED_TIME, sdf.format(changedTime))
                 }
                 val whereId = "${BaseColumns._ID} = ${From_Id}"
                 db.update(FeedEntry.TABLE_NAME,  values,  whereId, null)
-                Log.d("test001", "update!")
             }
 
         }

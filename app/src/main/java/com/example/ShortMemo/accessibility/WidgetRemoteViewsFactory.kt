@@ -18,8 +18,6 @@ class WidgetRemoteViewsFactory(var applicationContext : Context, intent : Intent
     private lateinit var mCursor : Cursor
 
     override fun onCreate() {
-        Log.d("test001", "widget created")
-
         /* db 데이터 읽어오기 */
         val dbHelper = FeedReaderDbHelper(applicationContext)
         var db = dbHelper.readableDatabase
@@ -40,12 +38,11 @@ class WidgetRemoteViewsFactory(var applicationContext : Context, intent : Intent
     }
 
     override fun onDataSetChanged() {
-
-        Log.d("test001", "changed 1")
+        Log.d("Test001_widget", "changed 1")
         if(mCursor != null){
             mCursor.close()
         }
-        Log.d("test001", "changed 2")
+        Log.d("Test001_widget", "changed 2")
 
         var identityToken = Binder.clearCallingIdentity()
 

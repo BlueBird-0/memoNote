@@ -83,7 +83,6 @@ class OptionActivity: AppCompatActivity() {
 
         //AutoExecution
         switch_autoexec.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            Log.d("test001", "???????")
             if(isChecked){
                 Toast.makeText(applicationContext, getString(R.string.alert_message_checkAutoexceution), Toast.LENGTH_LONG).show()
                 sharedPref.edit().putBoolean(getString(R.string.option_autoExecution), true).commit()

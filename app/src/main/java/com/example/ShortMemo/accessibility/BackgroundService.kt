@@ -13,7 +13,7 @@ class BackgroundService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("test001", "service start")
+        Log.d("Test001_service", "service start")
 
         try {
             unregisterReceiver(receiver)
@@ -25,9 +25,7 @@ class BackgroundService : Service() {
     }
 
     override fun onDestroy() {
-        Log.d("test001", "service destroy1")
         super.onDestroy()
-        Log.d("test001", "service destroy2")
         unregisterReceiver(receiver)
     }
 }
