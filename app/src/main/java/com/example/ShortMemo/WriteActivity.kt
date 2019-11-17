@@ -1,12 +1,11 @@
 package com.example.ShortMemo
 
 import android.app.Activity
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.provider.BaseColumns
 import android.util.Log
 import android.view.View
@@ -14,13 +13,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
+import com.example.ShortMemo.accessibility.WidgetProvider
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_write.*
-import kotlinx.android.synthetic.main.activity_write.fab_cam
-import kotlinx.android.synthetic.main.activity_write.fab_mic
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -57,6 +53,9 @@ class WriteActivity : AppCompatActivity() {
                 FeedReaderDbHelper.updateData(applicationContext, note, id)
             }
 
+            //widgetUpdate 위젯 새로고침
+            val ids = AppWidgetManager.getInstance(this).getAppWidgetIds(ComponentName(application, WidgetProvider::class.java))
+            AppWidgetManager.getInstance(this).notifyAppWidgetViewDataChanged(ids, R.id.widgetListView)
 
             var returnIntent = Intent()
             returnIntent.putExtra("note", note)

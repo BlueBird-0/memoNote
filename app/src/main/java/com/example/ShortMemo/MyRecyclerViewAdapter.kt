@@ -1,6 +1,8 @@
 package com.example.ShortMemo
 
 import android.app.Activity
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.provider.BaseColumns
@@ -8,12 +10,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ShortMemo.accessibility.WidgetProvider
 import kotlinx.android.synthetic.main.list_item.view.*
 
 // 아이템 리스트
@@ -21,10 +25,18 @@ class ItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private var layout: ConstraintLayout = itemView.item_mainLayout
     private var titleView: TextView = itemView.item_content
+    private var itemImageView: FrameLayout = itemView.item_image
+
     fun bind(beer: ViewModel) =
             with(itemView) {
                 val noteViewModel = beer as NoteViewModel
                 titleView.text = noteViewModel.note.content
+                Log.d( "Test001_Recycler", "Note_Uri: "+noteViewModel.note.pictureUri)
+                if(noteViewModel.note.pictureUri != null){
+                    itemImageView.visibility = View.VISIBLE
+                }else {
+                    itemImageView.visibility = View.GONE
+                }
                 layout.setOnClickListener(View.OnClickListener {
                     Log.d( "Test001_Recycler", "Note_Id:  "+noteViewModel.note.id.toString())
                     Log.d( "Test001_Recycler", "Note_Content:  "+noteViewModel.note.content)
@@ -88,6 +100,11 @@ class MyRecyclerViewAdapter(private val context: Context, private val items: Mut
     private fun deleteItem(position: Int) {
         items.removeAt(position)
         FeedReaderDbHelper.checkData(context, position+1)
+
+
+        //widgetUpdate 위젯 새로고침
+        val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))
+        AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(ids, R.id.widgetListView)
 
         notifyItemRemoved(position)
     }

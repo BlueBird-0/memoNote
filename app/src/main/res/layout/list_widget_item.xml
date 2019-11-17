@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="32dp"
     android:orientation="vertical">
@@ -8,7 +9,8 @@
     <FrameLayout
         android:id="@+id/TextLayout"
         android:layout_width="match_parent"
-        android:layout_height="32dp">
+        android:layout_height="32dp"
+        android:layout_marginRight="32dp">
 
         <TextView
             android:id="@+id/widgetItemTaskNameLabel"
@@ -16,17 +18,36 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
             android:layout_marginBottom="8dp"
             android:text="MessageText" />
+
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_alignRight="@id/guideline1">
+
+        <ImageView
+            android:id="@+id/item_widget_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_cam"
+            android:tint="@color/colorPrimaryDark"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_cam"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/widget_check"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentRight="true">
 
         <ImageView
-            android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -43,6 +64,7 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/guideline1"
         android:layout_width="1px"
         android:layout_height="32dp"
         android:layout_alignParentRight="true"

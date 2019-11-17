@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#ffffff">
 
     <TextView
-        android:id="@+id/item_content"
+        android:id="@+id/item_record_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
         android:layout_marginBottom="8dp"
-        android:text="RecordText"
         android:maxLines="3"
+        android:text="RecordText"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/item_checkedTime"
+        app:layout_constraintEnd_toStartOf="@+id/item_record_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/item_record_image"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ic_cam"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/item_record_checkedTime"
+        app:layout_constraintEnd_toStartOf="@+id/item_record_checkedTime"
+        app:layout_constraintTop_toTopOf="@+id/item_record_checkedTime"
+        tools:visibility="visible" />
+
     <TextView
-        android:id="@+id/item_checkedTime"
+        android:id="@+id/item_record_checkedTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

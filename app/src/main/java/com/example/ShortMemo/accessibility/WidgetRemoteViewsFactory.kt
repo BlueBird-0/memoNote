@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.os.Binder
 import android.provider.BaseColumns
 import android.util.Log
+import android.view.View
 import android.widget.AdapterView
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
@@ -96,6 +97,12 @@ class WidgetRemoteViewsFactory(var applicationContext : Context, intent : Intent
 
         var remoteViews = RemoteViews(applicationContext.packageName, R.layout.list_widget_item)
         remoteViews.setTextViewText(R.id.widgetItemTaskNameLabel, mCursor.getString(1))
+        Log.d("test001", "widget log : "+mCursor.getString(4))
+        if(mCursor.getString(4) != "null") {
+            remoteViews.setViewVisibility(R.id.item_widget_image, View.VISIBLE)
+        } else {
+            remoteViews.setViewVisibility(R.id.item_widget_image, View.GONE)
+        }
         return remoteViews
     }
 

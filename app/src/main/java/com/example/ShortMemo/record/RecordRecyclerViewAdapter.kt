@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
@@ -19,16 +20,18 @@ private var prev = object{ var previousTimeStr : String = "" }  //singleton
 
 // 아이템 리스트
 class RecordItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private var titleView: TextView = itemView.item_content
-    private var checkedTime: TextView = itemView.item_checkedTime
+    private var titleView: TextView = itemView.item_record_content
+    private var checkedTime: TextView = itemView.item_record_checkedTime
+    private var itemImageView: FrameLayout = itemView.item_record_image
 
     fun bind(beer: ViewModel) =
             with(itemView) {
                 val noteViewModel = beer as NoteViewModel
                 titleView.text = noteViewModel.note.content
-
-
                 checkedTime.text = getCheckedTimeText(noteViewModel)
+                if(noteViewModel.note.pictureUri != null) {
+                    itemImageView.visibility = View.VISIBLE
+                }
             }
 
     //날자별 텍스트 불러오기 (디자인 필요)

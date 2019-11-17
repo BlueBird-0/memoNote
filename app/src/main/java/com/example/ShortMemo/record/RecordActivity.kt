@@ -77,8 +77,9 @@ class RecordActivity: AppCompatActivity() {
                 }else {
                     checkedTime = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
                 }
+                var pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
 
-                var noteVM = NoteViewModel(Note(id, content, createdTime, checkedTime, pictureUri = null))
+                var noteVM = NoteViewModel(Note(id, content, createdTime, checkedTime, pictureUri))
                 //val pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
                 list.add(noteVM)
             }
