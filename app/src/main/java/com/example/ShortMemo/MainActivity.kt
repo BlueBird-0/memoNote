@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var audioIntent: Intent
-    private val list = mutableListOf<ViewModel>()
+    private var list = mutableListOf<ViewModel>()
 
 
 
@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() {
 
         val itemIds = mutableListOf<Long>()
         with(cursor){
-            Log.d("MainActivitys", "커서 시작됨")
+            Log.d("MainActivity", "커서 시작됨")
             while(moveToNext()){
                 val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
                 itemIds.add(itemId)
@@ -300,23 +300,47 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d("test002 ", "1 ")
         when(requestCode) {
             WRITE_NOTE_REQUEST_CODE -> {
+                Log.d("test002 ", "2 ")
                 if(resultCode == Activity.RESULT_OK)
                 {
+                    Log.d("test002 ", "3 ")
                     var addedNote = NoteViewModel(data!!.getParcelableExtra<Note>("note"))
                     list.add(addedNote)
                     //새로고침
                 }
             }
             UPDATE_NOTE_REQUEST_CODE -> {
+                Log.d("test002 ", "4 ")
                 if(resultCode == Activity.RESULT_OK)
                 {
-                    list.removeAll(list)
-                    readNotes()
+                    Log.d("test002 ", "5 ")
+                    var addedNote = NoteViewModel(data!!.getParcelableExtra<Note>("note"))
+                    Log.d("test002 ", addedNote.note.content)
+                    Log.d("test002 ", ""+addedNote.note.id)
+                    Log.d("test002 ", ""+addedNote.note.pictureUri)
+                    //list.removeAll(list)
+                    var updateNoteIndex = getIndex(addedNote.note.id)
+
+                    list.removeAt(updateNoteIndex)
+                    list.add(updateNoteIndex,addedNote)
+                    note_list.adapter?.notifyDataSetChanged()
                 }
             }
         }
+    }
+
+    private fun getIndex(id: Long) : Int {
+        var index : Int = 0
+        for(listItem in list) {
+            var noteVM = listItem as NoteViewModel
+            if(id == noteVM.note.id)
+                break
+            index++
+        }
+        return index
     }
 
     private fun initSwi(){
