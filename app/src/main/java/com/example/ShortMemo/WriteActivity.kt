@@ -2,38 +2,56 @@ package com.example.ShortMemo
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.BaseColumns
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
+import gun0912.tedbottompicker.TedBottomPicker
+import gun0912.tedbottompicker.TedBottomSheetDialogFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_write.*
+import kotlinx.android.synthetic.main.activity_write.fab_cam
+import kotlinx.android.synthetic.main.activity_write.fab_mic
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 class WriteActivity : AppCompatActivity() {
+    lateinit var note : Note
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
 
-        var note = Note(0, "")
+        note = Note(0, "")
         // 전달 된 노트 실행
         var id = intent.getLongExtra(BaseColumns._ID, -1)
         if(id != -1L ) {
             note = readNote(id)
             keyboardEdit.setText(note.content)
         }
+        imageLoad()
 
 
         keyboardEdit.requestFocus()
 //        var keyManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        fab_cam.setOnClickListener{}
+        fab_cam.setOnClickListener{ fab_cam() }
         fab_mic.setOnClickListener{}
         uploadBtn.setOnClickListener{view->
 
             /* writeNote test code */
             var content = keyboardEdit.text.toString()
             note.content = content
-            if(note.id == 0L) {
+            if(note.id == 0L) { //new data
                 note.id = FeedReaderDbHelper.writeData(applicationContext, note)
             }else {
                 FeedReaderDbHelper.updateData(applicationContext, note, id)
@@ -46,6 +64,63 @@ class WriteActivity : AppCompatActivity() {
             finish()
             overridePendingTransition(R.anim.hold_activity,R.anim.close_activity)
         }
+    }
+
+    private fun fab_cam() {
+        TedBottomPicker.with(this)
+                .setPeekHeight(1600)
+                .showTitle(false)
+                .setCompleteButtonText("Done")
+                .setEmptySelectionText("No Select")
+                .setSelectedUriList(note.pictureUri)
+                .showMultiImage(object : TedBottomSheetDialogFragment.OnMultiImageSelectedListener {
+                    override fun onImagesSelected(uriList: List<Uri>) {
+                        note.pictureUri = ArrayList<Uri>()
+                        for(uri in uriList) {
+                            note.pictureUri!!.add(uri)
+                        }
+                        imageLoad()
+                    }
+                })
+    }
+
+    private fun imageLoad() {
+        var imageTag = 0    //이미지 개수 및 태그번호
+        imageLayout.removeAllViews()
+
+        if(note.pictureUri == null || note.pictureUri?.size == 0) {
+            fab_cam.backgroundTintList = resources.getColorStateList(R.color.colorPrimaryDark)
+            return
+        }
+        fab_cam.backgroundTintList = resources.getColorStateList(R.color.colorAccent)
+        for(uri in note.pictureUri!!) {
+            var image = ImageView(applicationContext)
+
+            ///////////////// set params
+            var params = image.layoutParams
+            if(params == null) {
+                params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            }
+            params.width = ViewGroup.LayoutParams.WRAP_CONTENT
+            image.layoutParams = params
+            //////////////////
+
+            Glide.with(applicationContext).load(uri)
+                    .override(260)
+                    .centerCrop()
+                    .into(image)
+
+            image.tag = ++imageTag
+            imageLayout.addView(image)
+
+            image.setOnClickListener(View.OnClickListener {
+                var intent = Intent(applicationContext, ImagePopupActivity::class.java)
+                intent.putExtra("imageTag", image.tag as Int)
+                intent.putExtra("note", note)
+                startActivity(intent)
+            })
+        }
+
     }
 
     override fun onBackPressed() {
@@ -74,32 +149,42 @@ class WriteActivity : AppCompatActivity() {
 
         val itemIds = mutableListOf<Long>()
         with(cursor){
-            Log.d("Test001_writeActivity", "커서 시작됨")
-            //while(moveToNext()){
             moveToNext()
-                val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
-                itemIds.add(itemId)
+            val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
+            itemIds.add(itemId)
 
-                Log.d("Test001_writeActivity", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
-                Log.d("Test001_writeActivity", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
-                Log.d("Test001_writeActivity", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
-                Log.d("Test001_writeActivity", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
-                Log.d("Test001_writeActivity", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
+            Log.d("Test001_writeActivity", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+            Log.d("Test001_writeActivity", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
+            Log.d("Test001_writeActivity", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+            Log.d("Test001_writeActivity", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+            Log.d("Test001_writeActivity", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
 
-                val id = cursor.getLong(getColumnIndex("${BaseColumns._ID}"))
-                val content = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}"))
-                val createdTime : Date? = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
-                var checkedTime : Date?
-                if (cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")) == null) {
-                    checkedTime = null
-                }else {
-                    checkedTime = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+            val id = cursor.getLong(getColumnIndex("${BaseColumns._ID}"))
+            val content = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}"))
+            val createdTime : Date? = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+            var checkedTime : Date?
+            if (cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")) == null) {
+                checkedTime = null
+            }else {
+                checkedTime = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+            }
+            //이미지 불러오기
+            var pictureUri : ArrayList<Uri>?
+            if(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")) == "null"){
+                pictureUri = null
+            }else {
+                val pictureUriString = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
+                val pictureUriReplace = pictureUriString?.substring(1, pictureUriString.length-1)?.split(", ")
+                pictureUri = ArrayList()
+                for (str in pictureUriReplace!!) {
+                    pictureUri.add(Uri.parse(str))
                 }
+            }
 
-                var note = Note(id, content, createdTime, checkedTime, pictureUri = null)
-                //val pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
-                return note
-            //}
+
+
+            var note = Note(id, content, createdTime, checkedTime, pictureUri)
+            return note
         }
     }
 

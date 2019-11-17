@@ -35,6 +35,9 @@
         </activity>
         <activity android:name="com.example.ShortMemo.WriteActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.example.ShortMemo.ImagePopupActivity"
+            android:theme="@style/AppTheme.Image"/>
+
         <activity android:name="com.example.ShortMemo.record.RecordActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name="com.example.ShortMemo.OptionActivity"

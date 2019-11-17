@@ -3,6 +3,7 @@
 
     <string name="app_done">Done</string>
     <string name="app_connect">Connect</string>
+    <string name="str_picture">사진</string>
 
     <string name="option_title_synchronization">동기화</string>
     <string name="option_title_access">접근성</string>

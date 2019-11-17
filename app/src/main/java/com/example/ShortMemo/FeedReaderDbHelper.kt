@@ -61,7 +61,11 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                     put(FeedEntry.COLUMNS_NOTE_CREATED_TIME, sdf.format(note?.createdTime))
                 if (note.checkedTime != null)
                     put(FeedEntry.COLUMNS_NOTE_CHECKED_TIME, sdf.format(note?.checkedTime))
+
+                if(note.pictureUri?.size == 0)
+                    note.pictureUri = null
                 put(FeedEntry.COLUMNS_NOTE_PICTURE_URI, note.pictureUri.toString())
+
             }
             val db = dbHelper.writableDatabase
             return db.insert(FeedEntry.TABLE_NAME, null, values)
@@ -75,6 +79,9 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                     put(FeedEntry.COLUMNS_NOTE_CREATED_TIME, sdf.format(note?.createdTime))
                 if (note.checkedTime != null)
                     put(FeedEntry.COLUMNS_NOTE_CHECKED_TIME, sdf.format(note?.checkedTime))
+
+                if(note.pictureUri?.size == 0)
+                    note.pictureUri = null
                 put(FeedEntry.COLUMNS_NOTE_PICTURE_URI, note.pictureUri.toString())
             }
             val db = dbHelper.writableDatabase
