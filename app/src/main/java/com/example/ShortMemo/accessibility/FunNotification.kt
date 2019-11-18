@@ -8,9 +8,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
+import android.provider.BaseColumns
+import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.ShortMemo.MainActivity
-import com.example.ShortMemo.R
+import com.example.ShortMemo.*
+import java.util.*
 
 
 class FunNotification {
@@ -27,8 +29,8 @@ class FunNotification {
 
             var builder = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_app)
-                    .setContentTitle(context.getString(R.string.app_name))
-                    .setContentText("textContent")
+                    .setContentTitle(context.getString(R.string.str_statusbar))
+                    //.setContentText("textContent")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
                     .setShowWhen(false)
@@ -58,20 +60,19 @@ class FunNotification {
             return builder
         }
 
-        fun notificationNote(context: Context): NotificationCompat.Builder {
+        fun notificationNote(context: Context, note:Note): NotificationCompat.Builder {
             var intent = Intent(context, MainActivity::class.java)
             var pendingIntent = PendingIntent.getActivity(context, 1, intent, 0)
 
 
             var builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_app)
                     //.setContentTitle(context.getString(R.string.app_name))
-                    .setContentText("이건 메모입니다")
+                    .setSmallIcon(R.drawable.ic_app)
+                    .setContentText(note.content)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pendingIntent)
-                    .setWhen(1000)// 시간 체크
+                    .setWhen(note.createdTime!!.time)// 시간 체크
                     .setGroup(GROUP_ID)
-                    .setNumber(10) //알람 개수
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val name = "ChannelName"
