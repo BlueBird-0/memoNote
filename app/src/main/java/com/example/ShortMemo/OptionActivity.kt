@@ -1,5 +1,6 @@
 package com.example.ShortMemo
 
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +12,7 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
+import com.example.ShortMemo.accessibility.BroadcastReceiverApp
 import com.example.ShortMemo.accessibility.FloatingViewService
 import com.example.ShortMemo.accessibility.FunNotification
 import com.example.ShortMemo.record.RecordActivity
@@ -70,7 +72,11 @@ class OptionActivity: AppCompatActivity() {
         switch_statusbar.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
                 with(NotificationManagerCompat.from(this)) {
-                    notify(100685, FunNotification.notification(applicationContext).build())
+                    //notify(970317, FunNotification.notification(applicationContext).build())
+                    var callIntent = Intent(applicationContext, BroadcastReceiverApp::class.java)
+                    callIntent.action = FunNotification.ACTION_DELETE
+                    sendBroadcast(callIntent)
+
                 }
                 sharedPref.edit().putBoolean(getString(R.string.option_statusBar), true).commit()
             }else {

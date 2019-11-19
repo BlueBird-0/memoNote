@@ -53,7 +53,7 @@ class FunNotification {
 
             //DeleteEvent
             var deleteIntent = Intent(context, BroadcastReceiverApp::class.java)
-            deleteIntent.setAction(ACTION_DELETE)
+            deleteIntent.action = ACTION_DELETE
             var deletePendingIntent = PendingIntent.getBroadcast(context, 0, deleteIntent, 0)
             builder.setDeleteIntent(deletePendingIntent)
 
