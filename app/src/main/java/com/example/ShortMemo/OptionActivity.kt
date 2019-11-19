@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -44,9 +45,23 @@ class OptionActivity: AppCompatActivity() {
         var usingAutoExecution = sharedPref.getBoolean(getString(R.string.option_autoExecution), false)
         switch_autoexec.isChecked = usingAutoExecution
 
+        layout_kakao.setOnClickListener(View.OnClickListener {
+            Toast.makeText(applicationContext, getString(R.string.alert_message_kakao), Toast.LENGTH_LONG).show()
+            sharedPref.edit().putBoolean(getString(R.string.option_autoExecution), true).commit()
+        })
 
+
+        //Widget 도움말 페이지 열기
+        layout_widget.setOnClickListener(View.OnClickListener {
+            var intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://support.google.com/android/answer/9450271?hl=ko")
+            startActivity(intent)
+        })
 
         //Window 바로가기 floating button
+        layout_windowShortcut.setOnClickListener(View.OnClickListener {
+            switch_windowShortcut.isChecked = !switch_windowShortcut.isChecked
+        })
         switch_windowShortcut.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked) {
                 //Floating View 권한 체크
@@ -69,6 +84,9 @@ class OptionActivity: AppCompatActivity() {
         })
 
         //Notification
+        layout_statusbar.setOnClickListener(View.OnClickListener {
+            switch_statusbar.isChecked = !switch_statusbar.isChecked
+        })
         switch_statusbar.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
                 with(NotificationManagerCompat.from(this)) {
@@ -88,6 +106,9 @@ class OptionActivity: AppCompatActivity() {
         })
 
         //AutoExecution
+        layout_autoexec.setOnClickListener(View.OnClickListener {
+            switch_autoexec.isChecked = !switch_autoexec.isChecked
+        })
         switch_autoexec.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
                 Toast.makeText(applicationContext, getString(R.string.alert_message_checkAutoexceution), Toast.LENGTH_LONG).show()

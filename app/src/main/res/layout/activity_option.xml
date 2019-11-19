@@ -45,36 +45,45 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
+                android:id="@+id/layout_kakao"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:background="@drawable/ripple_option_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-                <Button
-                    android:id="@+id/button1"
+                <FrameLayout
+                    android:id="@+id/frameLayout8"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/background_circle"
-                    android:backgroundTint="@android:color/holo_orange_light"
-                    android:text="K"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="6dp"
+                        android:src="@drawable/ic_kakao"
+                        app:srcCompat="@drawable/ic_kakao" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:text="@string/option_kakaoLogin"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button1"
+                    app:layout_constraintStart_toEndOf="@+id/frameLayout8"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -102,10 +111,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+                app:layout_constraintTop_toBottomOf="@+id/layout_kakao">
 
                 <Button
-                    android:enabled="false"
                     android:id="@+id/button2"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -114,17 +122,17 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/background_circle"
                     android:backgroundTint="@android:color/holo_orange_light"
-                    android:text="A"
+                    android:enabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:enabled="false"
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
+                    android:enabled="false"
                     android:text="@string/option_autoUpload"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/button2"
@@ -158,7 +166,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
                 <Button
-                    android:enabled="false"
                     android:id="@+id/button3"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -167,19 +174,19 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/background_circle"
                     android:backgroundTint="@android:color/holo_orange_light"
-                    android:text="P"
+                    android:enabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:enabled="false"
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:enabled="false"
                     android:text="@string/option_pc"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/button3"
@@ -205,38 +212,48 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout5"
+                android:id="@+id/layout_widget"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/ripple_option_btn"
                 app:layout_constraintTop_toBottomOf="@+id/textView7">
 
-                <Button
-                    android:id="@+id/button4"
+                <FrameLayout
+                    android:id="@+id/frameLayout7"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/background_circle"
-                    android:backgroundTint="@android:color/holo_orange_light"
-                    android:text="K"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="6dp"
+                        android:src="@drawable/ic_widget"
+                        android:tint="@android:color/black"
+                        app:srcCompat="@drawable/ic_widget" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="@string/option_widget"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button4"
+                    app:layout_constraintStart_toEndOf="@+id/frameLayout7"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <FrameLayout
@@ -249,12 +266,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout6"
+                android:id="@+id/layout_windowShortcut"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
+                android:background="@drawable/ripple_option_btn"
+                app:layout_constraintTop_toBottomOf="@+id/layout_widget">
 
                 <FrameLayout
                     android:id="@+id/frameLayout"
@@ -311,12 +329,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout7"
+                android:id="@+id/layout_statusbar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+                android:background="@drawable/ripple_option_btn"
+                app:layout_constraintTop_toBottomOf="@+id/layout_windowShortcut">
 
                 <FrameLayout
                     android:id="@+id/frameLayout3"
@@ -371,12 +390,13 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout8"
+                android:id="@+id/layout_autoexec"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
+                android:background="@drawable/ripple_option_btn"
+                app:layout_constraintTop_toBottomOf="@+id/layout_statusbar">
 
 
                 <FrameLayout
