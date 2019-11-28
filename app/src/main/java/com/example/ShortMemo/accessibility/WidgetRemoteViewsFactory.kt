@@ -1,5 +1,6 @@
 package com.example.ShortMemo.accessibility
 
+
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -10,10 +11,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import com.example.ShortMemo.FeedEntry
-import com.example.ShortMemo.FeedReaderDbHelper
-import com.example.ShortMemo.R
-import kotlin.contracts.ContractBuilder
+import com.example.ShortMemo.*
 
 class WidgetRemoteViewsFactory(var applicationContext : Context, intent : Intent) : RemoteViewsService.RemoteViewsFactory {
     private lateinit var mCursor : Cursor
@@ -90,8 +88,10 @@ class WidgetRemoteViewsFactory(var applicationContext : Context, intent : Intent
     }
 
     override fun getViewAt(position: Int): RemoteViews? {
+        Log.d("test001","Widget test1 + "+position)
         if(position == AdapterView.INVALID_POSITION ||
                 mCursor == null || !mCursor.moveToPosition(position)) {
+            Log.d("test001","Widget test2 - "+position)
             return null
         }
 
@@ -103,6 +103,21 @@ class WidgetRemoteViewsFactory(var applicationContext : Context, intent : Intent
         } else {
             remoteViews.setViewVisibility(R.id.item_widget_image, View.GONE)
         }
+
+
+
+
+        //Widget list button
+        val writeIntent = Intent()
+        writeIntent.action = WidgetProvider.ACTION_WRITE
+        writeIntent.putExtra(WidgetProvider.EXTRA_WRITE_POS, position)
+        remoteViews.setOnClickFillInIntent(R.id.widgetLayout, writeIntent)
+        //Widget check button
+        val checkIntent = Intent()
+        checkIntent.action = WidgetProvider.ACTION_CHECK
+        checkIntent.putExtra(WidgetProvider.EXTRA_CHECK_POS, position)
+        remoteViews.setOnClickFillInIntent(R.id.widgetCheck, checkIntent)
+
         return remoteViews
     }
 

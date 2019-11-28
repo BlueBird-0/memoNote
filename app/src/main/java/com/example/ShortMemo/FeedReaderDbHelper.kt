@@ -115,6 +115,30 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                 db.update(FeedEntry.TABLE_NAME,  values,  whereId, null)
             }
         }
+
+        fun getIdFromIndex(context: Context, index : Int):Long {
+            /* db 데이터 읽어오기 */
+            val dbHelper = FeedReaderDbHelper(context)
+            val db = dbHelper.readableDatabase
+
+            val projection = arrayOf(BaseColumns._ID)
+            val selection = "${FeedEntry.COLUMNS_NOTE_CHECKED_TIME} IS NULL "
+            val cursor = db.query(
+                    FeedEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,//selection,              // The columns for the WHERE clause
+                    null,     // The values for the WHERE clause
+                    null,         // don't group the rows
+                    null,           // don't filter by row groups
+                    null               // The sort order
+            )
+            with(cursor){
+                move(index)  //해당 컬럼으로 이동
+                Log.d("Test001_DB", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+                return cursor.getLong(getColumnIndex("${BaseColumns._ID}"))
+            }
+        }
+
         fun swapData(context: Context, swapPositionFrom: Int, swapPositionTo: Int){
             /* db swap data
             * change CREATED_TIME at From */

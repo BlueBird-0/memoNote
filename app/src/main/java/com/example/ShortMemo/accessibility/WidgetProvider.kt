@@ -11,6 +11,13 @@ import com.example.ShortMemo.MainActivity
 import com.example.ShortMemo.R
 
 class WidgetProvider : AppWidgetProvider() {
+    companion object {
+        const val ACTION_WRITE = "actionWriteFromWidget"
+        const val EXTRA_WRITE_POS = "call_writeactivity_position"
+        const val ACTION_CHECK = "actionCheckFromWidget"
+        const val EXTRA_CHECK_POS = "call_check_position"
+    }
+
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         appWidgetIds.forEach { appWidgetId->
             Log.d("test001", "Widget : called onUpdate")
@@ -23,12 +30,21 @@ class WidgetProvider : AppWidgetProvider() {
                     context.packageName,
                     R.layout.layout_widget
             ).apply {
-                setOnClickPendingIntent(R.id.button4, pendingIntent)
-
+                setOnClickPendingIntent(R.id.widget_write, pendingIntent)
                 setRemoteAdapter(R.id.widgetListView, remoteIntent)
+
+
+                val intent = Intent(context, BroadcastReceiverApp::class.java)
+                var listClickPendingIntent = PendingIntent.getBroadcast(context,0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                this.setPendingIntentTemplate(R.id.widgetListView, listClickPendingIntent)
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
+    }
+
+    override fun onReceive(context: Context?, intent: Intent?) {
+        super.onReceive(context, intent)
+        Log.d("test001", "lllllllllllllllllllllllllllllllllllllllllllllllllll")
     }
 }

@@ -43,7 +43,6 @@ class WriteActivity : AppCompatActivity() {
         fab_cam.setOnClickListener{ fab_cam() }
         fab_mic.setOnClickListener{}
         uploadBtn.setOnClickListener{view->
-
             /* writeNote test code */
             var content = keyboardEdit.text.toString()
             note.content = content

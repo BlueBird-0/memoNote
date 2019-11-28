@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Process
 import android.provider.BaseColumns
 import android.provider.Settings
 import android.speech.RecognizerIntent
@@ -25,6 +26,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ShortMemo.accessibility.BackgroundService
+import com.example.ShortMemo.accessibility.WidgetProvider
 import com.example.ShortMemo.record.RecordActivity
 
 import com.google.android.gms.ads.AdRequest
@@ -35,6 +37,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
 import kotlinx.android.synthetic.main.activity_main.btn_set
+import kotlinx.android.synthetic.main.activity_option.*
 import java.util.*
 
 
@@ -48,7 +51,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var audioIntent: Intent
     private var list = mutableListOf<ViewModel>()
-
 
 
     @SuppressLint("RestrictedApi")
@@ -66,14 +68,11 @@ class MainActivity : AppCompatActivity() {
 
         //testcode
 
-
         //TODO Notification
         Log.d("Test001_service", "isServiceRunning : " + isServiceRunning(BackgroundService::class.java))
         if(! isServiceRunning(BackgroundService::class.java)) {
             startService(Intent(applicationContext, BackgroundService::class.java))
         }
-
-
 
 
         setRecognizer() //음성 인식 세팅
@@ -140,6 +139,9 @@ class MainActivity : AppCompatActivity() {
         btn_rec()
         btn_set()
     }
+
+
+
 
     private fun isServiceRunning(serviceClass : Class<*>): Boolean {
         var manager = this.getSystemService(Activity.ACTIVITY_SERVICE) as ActivityManager

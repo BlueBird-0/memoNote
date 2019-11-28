@@ -1,10 +1,13 @@
 package com.example.ShortMemo.accessibility
 
+import android.appwidget.AppWidgetManager
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.provider.BaseColumns
 import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationManagerCompat
 import com.example.ShortMemo.*
 import java.util.*
@@ -33,6 +36,28 @@ class BroadcastReceiverApp : BroadcastReceiver() {
                 readNotes(this, context)
             }
         }
+
+        if(action.equals(WidgetProvider.ACTION_CHECK)) {
+            val position = intent!!.getIntExtra(WidgetProvider.EXTRA_CHECK_POS, -1)
+            FeedReaderDbHelper.checkData(context, position!!.plus(1))
+
+            //widgetUpdate 위젯 새로고침
+            val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))
+            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(ids, R.id.widgetListView)
+            Toast.makeText(context, R.string.str_check, Toast.LENGTH_SHORT).show()
+            Log.d("Test001_Broadcast", "Called [ACTION CHECK] from Widget")
+        }else if(action.equals(WidgetProvider.ACTION_WRITE)) {
+            val position = intent!!.getIntExtra(WidgetProvider.EXTRA_WRITE_POS, -1)
+            val noteId = FeedReaderDbHelper.getIdFromIndex(context, position!!.plus(1))
+
+            val mainIntent = Intent(context, MainActivity::class.java)
+            context?.startActivity(mainIntent)
+            val writeIntent = Intent(context, WriteActivity::class.java)
+            writeIntent.putExtra(BaseColumns._ID, noteId)
+            context?.startActivity(writeIntent)
+            Log.d("Test001_Broadcast", "Called [ACTION WRITE] from Widget")
+        }
+
 
     }
     private fun readNotes(notifyManagerCompat: NotificationManagerCompat, context : Context) {

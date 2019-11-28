@@ -49,6 +49,7 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.SCREEN_ON"/>
+                <action android:name="WIDGET_BUTTON"/>
             </intent-filter>
         </receiver>
         <receiver android:name=".accessibility.WidgetProvider">
