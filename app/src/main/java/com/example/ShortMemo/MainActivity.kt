@@ -3,6 +3,8 @@ package com.example.ShortMemo
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -25,6 +27,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ShortMemo.accessibility.BackgroundService
+import com.example.ShortMemo.accessibility.WidgetProvider
 import com.example.ShortMemo.record.RecordActivity
 import com.example.ShortMemo.write.WriteActivity
 
@@ -36,7 +39,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
 import kotlinx.android.synthetic.main.activity_main.btn_set
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -283,6 +288,18 @@ class MainActivity : AppCompatActivity() {
                 .showMultiImage(object : TedBottomSheetDialogFragment.OnMultiImageSelectedListener {
                     override fun onImagesSelected(uriList: List<Uri>) {
                         // here is selected image uri list
+                        val sdf : SimpleDateFormat = SimpleDateFormat(getString(R.string.sdf_note))
+                        val content = sdf.format(Date())
+                        uriList as ArrayList<Uri>
+                        val note = Note(0, content, Date(), null, uriList)
+                        note.id = FeedReaderDbHelper.writeData(applicationContext, note)
+                        list.add(NoteViewModel(note))
+                        note_list.adapter?.notifyDataSetChanged()
+
+
+                        //widgetUpdate 위젯 새로고침
+                        val ids = AppWidgetManager.getInstance(applicationContext).getAppWidgetIds(ComponentName(applicationContext, WidgetProvider::class.java))
+                        AppWidgetManager.getInstance(applicationContext).notifyAppWidgetViewDataChanged(ids, R.id.widgetListView)
                     }
                 })
     }

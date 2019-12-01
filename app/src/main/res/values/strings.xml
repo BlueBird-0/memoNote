@@ -7,6 +7,7 @@
     <string name="str_picture">사진</string>
     <string name="str_statusbar">메모가 없습니다</string>
     <string name="str_check">Good!</string>
+    <string name="sdf_note">"MM월d일  HH:mm"</string>
 
 
     <string name="option_title_synchronization">동기화</string>

@@ -56,8 +56,8 @@ class MyRecognitionListener(val popupClass: PopupClass, val mainLayout: Constrai
 
             //음성인식 데이터 추가
             val note = Note(0, sstResult?.get(0))
-            FeedReaderDbHelper.writeData(context, note)
-            var addedNote = NoteViewModel(note)
+            note.id = FeedReaderDbHelper.writeData(context, note)
+            val addedNote = NoteViewModel(note)
 
             MainActivity.list.add(addedNote)
             note_list.adapter?.notifyDataSetChanged()
