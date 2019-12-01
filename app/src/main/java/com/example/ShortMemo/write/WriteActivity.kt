@@ -1,4 +1,4 @@
-package com.example.ShortMemo
+package com.example.ShortMemo.write
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.ShortMemo.*
 import com.example.ShortMemo.accessibility.WidgetProvider
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
@@ -60,7 +61,7 @@ class WriteActivity : AppCompatActivity() {
             returnIntent.putExtra("note", note)
             setResult(Activity.RESULT_OK, returnIntent)
             finish()
-            overridePendingTransition(R.anim.hold_activity,R.anim.close_activity)
+            overridePendingTransition(R.anim.hold_activity, R.anim.close_activity)
         }
     }
 
@@ -123,11 +124,11 @@ class WriteActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finish()
-        overridePendingTransition(R.anim.hold_activity,R.anim.close_activity)
+        overridePendingTransition(R.anim.hold_activity, R.anim.close_activity)
         //super.onBackPressed()
     }
 
-    private fun readNote(id: Long) : Note{
+    private fun readNote(id: Long) : Note {
         /* db 데이터 읽어오기 */
         val dbHelper = FeedReaderDbHelper(applicationContext)
         var db = dbHelper.readableDatabase

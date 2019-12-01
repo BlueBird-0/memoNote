@@ -33,9 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.example.ShortMemo.WriteActivity"
+        <activity android:name="com.example.ShortMemo.write.WriteActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.example.ShortMemo.ImagePopupActivity"
+        <activity android:name="com.example.ShortMemo.write.ImagePopupActivity"
             android:theme="@style/AppTheme.Image"/>
 
         <activity android:name="com.example.ShortMemo.record.RecordActivity"

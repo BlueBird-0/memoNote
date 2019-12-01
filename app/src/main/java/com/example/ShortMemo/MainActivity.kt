@@ -3,14 +3,12 @@ package com.example.ShortMemo
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.os.Process
 import android.provider.BaseColumns
 import android.provider.Settings
 import android.speech.RecognizerIntent
@@ -20,9 +18,6 @@ import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -30,8 +25,8 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ShortMemo.accessibility.BackgroundService
-import com.example.ShortMemo.accessibility.WidgetProvider
 import com.example.ShortMemo.record.RecordActivity
+import com.example.ShortMemo.write.WriteActivity
 
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -41,8 +36,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
 import kotlinx.android.synthetic.main.activity_main.btn_set
-import kotlinx.android.synthetic.main.activity_option.*
-import kotlinx.android.synthetic.main.popup_recoding.*
 import java.util.*
 
 
@@ -314,23 +307,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("test002 ", "1 ")
         when(requestCode) {
             WRITE_NOTE_REQUEST_CODE -> {
-                Log.d("test002 ", "2 ")
                 if(resultCode == Activity.RESULT_OK)
                 {
-                    Log.d("test002 ", "3 ")
                     var addedNote = NoteViewModel(data!!.getParcelableExtra<Note>("note"))
                     list.add(addedNote)
                     note_list.adapter?.notifyDataSetChanged()
                 }
             }
             UPDATE_NOTE_REQUEST_CODE -> {
-                Log.d("test002 ", "4 ")
                 if(resultCode == Activity.RESULT_OK)
                 {
-                    Log.d("test002 ", "5 ")
                     var addedNote = NoteViewModel(data!!.getParcelableExtra<Note>("note"))
                     Log.d("test002 ", addedNote.note.content)
                     Log.d("test002 ", ""+addedNote.note.id)

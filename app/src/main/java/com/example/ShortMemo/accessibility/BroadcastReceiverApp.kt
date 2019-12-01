@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationManagerCompat
 import com.example.ShortMemo.*
+import com.example.ShortMemo.write.WriteActivity
 import java.util.*
 
 class BroadcastReceiverApp : BroadcastReceiver() {

@@ -1,3 +1,3 @@
-package com.example.ShortMemo
+package com.example.ShortMemo.write
 
 class ImageModel (var imageUrl : String, var id : Int)

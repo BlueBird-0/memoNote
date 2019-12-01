@@ -1,6 +1,8 @@
 package com.example.ShortMemo
 
 import android.app.Activity
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ShortMemo.accessibility.WidgetProvider
 
 class MyRecognitionListener(val popupClass: PopupClass, val mainLayout: ConstraintLayout, val context:Context, val note_list: RecyclerView) : RecognitionListener{
     override fun onReadyForSpeech(p0: Bundle?) {
@@ -51,13 +54,17 @@ class MyRecognitionListener(val popupClass: PopupClass, val mainLayout: Constrai
         if(sstResult != null){
             popupClass.setText(sstResult?.get(0))
 
-
+            //음성인식 데이터 추가
             val note = Note(0, sstResult?.get(0))
             FeedReaderDbHelper.writeData(context, note)
             var addedNote = NoteViewModel(note)
 
             MainActivity.list.add(addedNote)
             note_list.adapter?.notifyDataSetChanged()
+
+            //widgetUpdate 위젯 새로고침
+            val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))
+            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(ids, R.id.widgetListView)
         }
         Log.d("test001", sstResult.toString())
 

@@ -1,4 +1,4 @@
-package com.example.ShortMemo
+package com.example.ShortMemo.write
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
+import com.example.ShortMemo.R
 import kotlinx.android.synthetic.main.pager_image_item.view.*
 
 class ImagePagerAdapter(var context: Context, var imageModelList:ArrayList<ImageModel>) : PagerAdapter() {

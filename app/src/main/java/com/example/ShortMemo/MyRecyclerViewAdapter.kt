@@ -13,11 +13,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ShortMemo.accessibility.WidgetProvider
+import com.example.ShortMemo.write.WriteActivity
 import kotlinx.android.synthetic.main.list_item.view.*
 
 // 아이템 리스트
@@ -31,7 +30,6 @@ class ItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
             with(itemView) {
                 val noteViewModel = beer as NoteViewModel
                 titleView.text = noteViewModel.note.content
-                Log.d( "Test001_Recycler", "Note_Uri: "+noteViewModel.note.pictureUri)
                 if(noteViewModel.note.pictureUri != null){
                     itemImageView.visibility = View.VISIBLE
                 }else {

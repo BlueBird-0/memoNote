@@ -88,16 +88,13 @@ class WidgetRemoteViewsFactory(var applicationContext : Context, intent : Intent
     }
 
     override fun getViewAt(position: Int): RemoteViews? {
-        Log.d("test001","Widget test1 + "+position)
         if(position == AdapterView.INVALID_POSITION ||
                 mCursor == null || !mCursor.moveToPosition(position)) {
-            Log.d("test001","Widget test2 - "+position)
             return null
         }
 
         var remoteViews = RemoteViews(applicationContext.packageName, R.layout.list_widget_item)
         remoteViews.setTextViewText(R.id.widgetItemTaskNameLabel, mCursor.getString(1))
-        Log.d("test001", "widget log : "+mCursor.getString(4))
         if(mCursor.getString(4) != "null") {
             remoteViews.setViewVisibility(R.id.item_widget_image, View.VISIBLE)
         } else {
