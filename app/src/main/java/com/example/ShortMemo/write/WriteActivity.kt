@@ -7,6 +7,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.BaseColumns
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +19,19 @@ import com.example.ShortMemo.*
 import com.example.ShortMemo.accessibility.WidgetProvider
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_write.*
+import kotlinx.android.synthetic.main.activity_write.fab_cam
+import kotlinx.android.synthetic.main.activity_write.fab_mic
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class WriteActivity : AppCompatActivity() {
     lateinit var note : Note
+    lateinit var mRecognizer: SpeechRecognizer
+    lateinit var audioIntent: Intent
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -42,7 +50,7 @@ class WriteActivity : AppCompatActivity() {
         keyboardEdit.requestFocus()
 //        var keyManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         fab_cam.setOnClickListener{ fab_cam() }
-        fab_mic.setOnClickListener{}
+        fab_mic.setOnClickListener{ fab_mic() }
         uploadBtn.setOnClickListener{view->
             /* writeNote test code */
             var content = keyboardEdit.text.toString()
@@ -65,6 +73,12 @@ class WriteActivity : AppCompatActivity() {
         }
     }
 
+    val popupclass = PopupClass()
+    private fun fab_mic() {
+        setRecognizer()
+        mRecognizer.startListening(audioIntent)
+    }
+
     private fun fab_cam() {
         TedBottomPicker.with(this)
                 .setPeekHeight(1600)
@@ -81,6 +95,17 @@ class WriteActivity : AppCompatActivity() {
                         imageLoad()
                     }
                 })
+    }
+
+    private fun setRecognizer(){
+        audioIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        audioIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+        audioIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
+        audioIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+        audioIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "말해주세요")
+        mRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
+
+        mRecognizer.setRecognitionListener(WriteRecognitionListener(popupclass, writeLayout, applicationContext, keyboardEdit))
     }
 
     private fun imageLoad() {
