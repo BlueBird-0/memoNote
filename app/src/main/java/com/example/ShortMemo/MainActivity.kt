@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         MobileAds.initialize(this)
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
-
         //testcode
 
         //TODO Notification
@@ -176,6 +175,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun readNotes() {
+        list.removeAll(list)
         /* db 데이터 읽어오기 */
         val dbHelper = FeedReaderDbHelper(applicationContext)
         var db = dbHelper.readableDatabase
