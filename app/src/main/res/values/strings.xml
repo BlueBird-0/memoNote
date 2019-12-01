@@ -6,8 +6,7 @@
 
     <string name="str_picture">사진</string>
     <string name="str_statusbar">메모가 없습니다</string>
-
-
+    <string name="str_check">Good!</string>
 
 
     <string name="option_title_synchronization">동기화</string>
@@ -28,4 +27,5 @@
 
     <string name="alert_message_kakao">개발중인 기능입니다</string>
     <string name="alert_message_checkAutoexceution">잠금화면을 열 때, 앱을 실행합니다</string>
+    <string name="alert_fail_recode">알아듣지 못했어요</string>
 </resources>

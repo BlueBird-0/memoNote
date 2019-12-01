@@ -3,6 +3,7 @@ package com.example.ShortMemo
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -19,6 +20,9 @@ import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +42,7 @@ import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
 import kotlinx.android.synthetic.main.activity_main.btn_set
 import kotlinx.android.synthetic.main.activity_option.*
+import kotlinx.android.synthetic.main.popup_recoding.*
 import java.util.*
 
 
@@ -46,11 +51,12 @@ class MainActivity : AppCompatActivity() {
         val PERMISSIONS_REQUEST_CODE = 1000
         val WRITE_NOTE_REQUEST_CODE = 1001
         val UPDATE_NOTE_REQUEST_CODE = 1002
+        var list = mutableListOf<ViewModel>()
     }
 
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var audioIntent: Intent
-    private var list = mutableListOf<ViewModel>()
+//    private var list = mutableListOf<ViewModel>()
 
 
     @SuppressLint("RestrictedApi")
@@ -274,9 +280,6 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(writeIntent, WRITE_NOTE_REQUEST_CODE)
         overridePendingTransition(R.anim.open_activity, R.anim.hold_activity)
     }
-    private fun fab_mic() {
-        mRecognizer.startListening(audioIntent)
-    }
     private fun fab_cam() {
         TedBottomPicker.with(this@MainActivity)
                 .setPeekHeight(1600)
@@ -291,14 +294,22 @@ class MainActivity : AppCompatActivity() {
                 })
     }
 
+
+    val popupclass = PopupClass()
+    private fun fab_mic() {
+        mRecognizer.startListening(audioIntent)
+    }
+
     private fun setRecognizer(){
         audioIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        audioIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
         audioIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
         audioIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
         audioIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "말해주세요")
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
 
-        mRecognizer.setRecognitionListener(MyRecognitionListener())
+//        mRecognizer.setRecognitionListener(MyRecognitionListener())
+        mRecognizer.setRecognitionListener(MyRecognitionListener(popupclass, mainLayout, applicationContext, note_list))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
