@@ -125,8 +125,7 @@ class RecordRecyclerViewAdapter(private val context: Context, private val items:
 
     private fun deleteItem(position: Int) {
         items.removeAt(position)
-//        FeedReaderDbHelper.checkData(context, position + 1)
-
+        FeedReaderDbHelper.deleteData(context, position+1)
         notifyItemRemoved(position)
     }
 

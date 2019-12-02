@@ -145,7 +145,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("test001", "애애애애애애애앵 onResume")
         note_list.adapter?.notifyDataSetChanged()
     }
 

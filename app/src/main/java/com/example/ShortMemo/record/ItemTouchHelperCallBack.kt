@@ -2,11 +2,14 @@ package com.example.ShortMemo.record
 
 import android.graphics.Canvas
 import android.R
+import android.content.Context
 import androidx.core.content.ContextCompat
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import android.util.TypedValue
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ShortMemo.FeedReaderDbHelper
+import kotlin.coroutines.coroutineContext
 
 
 class ItemTouchHelperCallBack(val adapter: ItemTouchHelperAdapter) : ItemTouchHelper.Callback() {

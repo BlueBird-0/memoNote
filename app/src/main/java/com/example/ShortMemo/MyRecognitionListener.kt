@@ -66,7 +66,6 @@ class MyRecognitionListener(val popupClass: PopupClass, val mainLayout: Constrai
             val ids = AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))
             AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(ids, R.id.widgetListView)
         }
-        Log.d("test001", sstResult.toString())
 
         popupClass.closePopupWindow()
     }

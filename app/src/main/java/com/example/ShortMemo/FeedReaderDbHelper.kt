@@ -94,7 +94,6 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
             db.update(FeedEntry.TABLE_NAME, values, "${BaseColumns._ID} = ${id}", null)
         }
 
-
         fun checkData(context: Context, position: Int) {
             /* db 데이터 읽어오기 */
             val dbHelper = FeedReaderDbHelper(context)
@@ -119,6 +118,29 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                 }
                 val whereId = "${BaseColumns._ID} = ${cursor.getLong(getColumnIndex("${BaseColumns._ID}"))}"
                 db.update(FeedEntry.TABLE_NAME,  values,  whereId, null)
+            }
+        }
+
+        fun deleteData(context: Context, position : Int) {
+            val dbHelper = FeedReaderDbHelper(context)
+            val db = dbHelper.writableDatabase
+
+            val projection = arrayOf(BaseColumns._ID)
+            val selection = "${FeedEntry.COLUMNS_NOTE_CHECKED_TIME} IS NOT NULL "
+            val cursor = db.query(
+                    FeedEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,//selection,              // The columns for the WHERE clause
+                    null,     // The values for the WHERE clause
+                    null,         // don't group the rows
+                    null,           // don't filter by row groups
+                    "${BaseColumns._ID} DESC"               // The sort order
+            )
+            with(cursor){
+                move(position)  //해당 컬럼으로 이동
+                val whereId = "${BaseColumns._ID} = ${cursor.getLong(getColumnIndex("${BaseColumns._ID}"))}"
+                db.delete(FeedEntry.TABLE_NAME, whereId, null)
+                Log.d("test001" ,"삭제완료")
             }
         }
 

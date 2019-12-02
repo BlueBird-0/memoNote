@@ -20,7 +20,6 @@ class WidgetProvider : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         appWidgetIds.forEach { appWidgetId->
-            Log.d("test001", "Widget : called onUpdate")
             val pendingIntent: PendingIntent = Intent(context, MainActivity::class.java)
                     .let { intent -> PendingIntent.getActivity(context, 0, intent, 0)
                     }
@@ -45,6 +44,5 @@ class WidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
-        Log.d("test001", "lllllllllllllllllllllllllllllllllllllllllllllllllll")
     }
 }
