@@ -75,10 +75,16 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
             val dbHelper = FeedReaderDbHelper(context)
             val values = ContentValues().apply {
                 put(FeedEntry.COLUMNS_NOTE_CONTENT, note.content)
-                if (note.createdTime != null)
+                if (note.createdTime != null) {
                     put(FeedEntry.COLUMNS_NOTE_CREATED_TIME, sdf.format(note?.createdTime))
-                if (note.checkedTime != null)
+                }else {
+                    putNull(FeedEntry.COLUMNS_NOTE_CREATED_TIME)
+                }
+                if (note.checkedTime != null) {
                     put(FeedEntry.COLUMNS_NOTE_CHECKED_TIME, sdf.format(note?.checkedTime))
+                }else {
+                    putNull(FeedEntry.COLUMNS_NOTE_CHECKED_TIME)
+                }
 
                 if(note.pictureUri?.size == 0)
                     note.pictureUri = null

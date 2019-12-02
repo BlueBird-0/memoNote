@@ -143,8 +143,11 @@ class MainActivity : AppCompatActivity() {
         btn_set()
     }
 
-
-
+    override fun onResume() {
+        super.onResume()
+        Log.d("test001", "애애애애애애애앵 onResume")
+        note_list.adapter?.notifyDataSetChanged()
+    }
 
     private fun isServiceRunning(serviceClass : Class<*>): Boolean {
         var manager = this.getSystemService(Activity.ACTIVITY_SERVICE) as ActivityManager
@@ -159,7 +162,7 @@ class MainActivity : AppCompatActivity() {
     private fun btn_rec() {
         btn_rec.setOnClickListener {
             val recordActivity = Intent(this, RecordActivity::class.java)
-            startActivity(recordActivity)
+            startActivityForResult(recordActivity, UPDATE_NOTE_REQUEST_CODE)
 //            startActivityForResult(writeIntent, WRITE_NOTE_REQUEST_CODE)
             overridePendingTransition(R.anim.left_activity, R.anim.hold_activity)
         }
