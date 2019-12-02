@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         val WRITE_NOTE_REQUEST_CODE = 1001
         val UPDATE_NOTE_REQUEST_CODE = 1002
         var list = mutableListOf<ViewModel>()
+
     }
 
     lateinit var mRecognizer: SpeechRecognizer

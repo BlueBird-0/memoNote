@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.ShortMemo.*
 import com.example.ShortMemo.accessibility.WidgetProvider
+import com.google.android.gms.ads.AdRequest
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,6 +37,8 @@ class WriteActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
+        val adRequest = AdRequest.Builder().build()
+        adView_write.loadAd(adRequest)
 
         note = Note(0, "")
         // 전달 된 노트 실행
