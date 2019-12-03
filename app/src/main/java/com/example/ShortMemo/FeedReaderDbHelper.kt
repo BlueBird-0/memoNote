@@ -48,7 +48,7 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
     }
 
     companion object {
-        const val DATABASE_VERSION = 5
+        const val DATABASE_VERSION = 6
         const val DATABASE_NAME = "FeedReader.db"
         val sdf : SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS")
 

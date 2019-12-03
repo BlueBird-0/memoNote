@@ -21,6 +21,7 @@
     <string name="USER_SETTINGS_PREF">userSettings</string>
 
 
+    <string name="option_tutorial">튜토리얼</string>    <!-- T/N -->
     <string name="option_widget">위젯</string>    <!-- T/N -->
     <string name="option_autoExecution">자동실행</string>   <!-- T/N -->
     <string name="option_windowShortcut">퀵 버튼</string>   <!-- T/N -->
@@ -33,6 +34,8 @@
     <string name="alert_record_title">기록장</string>
     <string name="alert_back_message">저장 하지 않고 돌아갑니다</string>
     <string name="alert_back_title">글쓰기 종료</string>
+    <string name="alert_tutorial">아직 이용할 수 없습니다</string>
+    <string name="alert_tutorial_longclick">길게 누르세요</string>
     <string name="yes">네</string>
     <string name="no">아니오</string>
 </resources>

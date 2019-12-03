@@ -42,6 +42,10 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name="com.example.ShortMemo.OptionActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.example.ShortMemo.tutorial.TutorialActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.example.ShortMemo.tutorial.TutorialWriteActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
 
 

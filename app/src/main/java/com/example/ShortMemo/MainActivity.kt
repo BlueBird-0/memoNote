@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,6 +21,7 @@ import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -29,12 +31,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ShortMemo.accessibility.BackgroundService
 import com.example.ShortMemo.accessibility.WidgetProvider
 import com.example.ShortMemo.record.RecordActivity
+import com.example.ShortMemo.tutorial.TutorialActivity
 import com.example.ShortMemo.write.WriteActivity
 
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
@@ -57,6 +61,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var audioIntent: Intent
 //    private var list = mutableListOf<ViewModel>()
 
+    private fun tutorialCheck() {
+        val sharedPref = this.getSharedPreferences(getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
+        var showsTutorial = sharedPref.getBoolean(getString(R.string.option_tutorial), false)
+
+        if(showsTutorial == false) {
+            startActivity(Intent(applicationContext, TutorialActivity::class.java))
+        }
+    }
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +76,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //tutorial
+        tutorialCheck()
         //initialize
         checkPermissions()
         //ADDMOB
