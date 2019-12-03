@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.ShortMemo">
+    package="com.bluebird.ShortMemo">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
@@ -24,7 +24,7 @@
             android:value="ca-app-pub-8004776504808264~7066223224"/>
 
         <activity
-            android:name="com.example.ShortMemo.MainActivity"
+            android:name="com.bluebird.ShortMemo.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize"
             android:label="@string/app_name">
@@ -33,30 +33,30 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.example.ShortMemo.write.WriteActivity"
+        <activity android:name="com.bluebird.ShortMemo.write.WriteActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.example.ShortMemo.write.ImagePopupActivity"
+        <activity android:name="com.bluebird.ShortMemo.write.ImagePopupActivity"
             android:theme="@style/AppTheme.Image"/>
 
-        <activity android:name="com.example.ShortMemo.record.RecordActivity"
+        <activity android:name="com.bluebird.ShortMemo.record.RecordActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.example.ShortMemo.OptionActivity"
+        <activity android:name="com.bluebird.ShortMemo.OptionActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.example.ShortMemo.tutorial.TutorialActivity"
+        <activity android:name="com.bluebird.ShortMemo.tutorial.TutorialActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.example.ShortMemo.tutorial.TutorialWriteActivity"
+        <activity android:name="com.bluebird.ShortMemo.tutorial.TutorialWriteActivity"
             android:windowSoftInputMode="adjustResize"/>
 
 
 
-        <receiver android:name="com.example.ShortMemo.accessibility.BroadcastReceiverApp"
+        <receiver android:name="com.bluebird.ShortMemo.accessibility.BroadcastReceiverApp"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.SCREEN_ON"/>
                 <action android:name="WIDGET_BUTTON"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".accessibility.WidgetProvider">
+        <receiver android:name="com.bluebird.ShortMemo.accessibility.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -64,14 +64,14 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/layout_widget_provider"/>
         </receiver>
-        <service android:name=".accessibility.WidgetRemoteViewsService"
+        <service android:name="com.bluebird.ShortMemo.accessibility.WidgetRemoteViewsService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <service android:enabled="true"
-            android:name="com.example.ShortMemo.accessibility.BackgroundService"/>
+            android:name="com.bluebird.ShortMemo.accessibility.BackgroundService"/>
         <service android:enabled="true"
             android:exported="false"
-            android:name="com.example.ShortMemo.accessibility.FloatingViewService"/>
+            android:name="com.bluebird.ShortMemo.accessibility.FloatingViewService"/>
     </application>
 
 </manifest>
