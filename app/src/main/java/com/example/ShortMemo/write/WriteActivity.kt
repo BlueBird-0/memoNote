@@ -1,8 +1,11 @@
 package com.example.ShortMemo.write
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ShortMemo.*
 import com.example.ShortMemo.accessibility.WidgetProvider
@@ -151,10 +155,24 @@ class WriteActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        finish()
+        openDialog()
         overridePendingTransition(R.anim.hold_activity, R.anim.close_activity)
         //super.onBackPressed()
     }
+
+    fun openDialog() {
+        //Dialog box
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle(R.string.alert_back_title)
+        alertDialog.setMessage(R.string.alert_back_message)
+        alertDialog.setIcon(R.drawable.ic_delete)
+        alertDialog.setPositiveButton(R.string.yes, DialogInterface.OnClickListener { dialogInterface, i ->
+            finish()
+        })
+        alertDialog.setNegativeButton(R.string.no, null)
+        alertDialog.show()
+    }
+
 
     private fun readNote(id: Long) : Note {
         /* db 데이터 읽어오기 */
