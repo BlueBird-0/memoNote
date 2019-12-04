@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.billingclient.api.*
 import com.bluebird.ShortMemo.accessibility.BackgroundService
 import com.bluebird.ShortMemo.accessibility.WidgetProvider
 import com.bluebird.ShortMemo.record.RecordActivity
@@ -46,7 +47,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
     companion object {
         val PERMISSIONS_REQUEST_CODE = 1000
         val WRITE_NOTE_REQUEST_CODE = 1001
@@ -57,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mRecognizer: SpeechRecognizer
     lateinit var audioIntent: Intent
-//    private var list = mutableListOf<ViewModel>()
 
     private fun tutorialCheck() {
         val sharedPref = this.getSharedPreferences(getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
@@ -80,10 +80,8 @@ class MainActivity : AppCompatActivity() {
         checkPermissions()
         //ADDMOB
         MobileAds.initialize(this)
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        setAdView()
         //testcode
-
         //TODO Notification
         Log.d("Test001_service", "isServiceRunning : " + isServiceRunning(BackgroundService::class.java))
         if(! isServiceRunning(BackgroundService::class.java)) {
@@ -247,6 +245,15 @@ class MainActivity : AppCompatActivity() {
 
                 val permissions : Array<String> = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 requestPermissions(permissions,  PERMISSIONS_REQUEST_CODE)
+        }
+    }
+
+    private fun setAdView() {
+        val sharedPref = this.getSharedPreferences(getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
+        if(sharedPref.getBoolean(getString(R.string.option_windowShortcut), false) == false) {
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
+            adView.visibility = View.VISIBLE
         }
     }
 

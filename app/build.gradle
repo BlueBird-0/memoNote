@@ -13,8 +13,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 29
         multiDexEnabled true
-        versionCode 1
-        versionName "1.00"
+        versionCode 4
+        versionName "1.03"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.github.stfalcon:stfalcon-imageviewer:0.1.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation "com.github.firdausmaulan:GlideSlider:1.5.1"
+    implementation 'com.android.billingclient:billing:2.0.3' //GooglePlay 결제모듈
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 

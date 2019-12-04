@@ -6,11 +6,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
+import com.android.billingclient.api.*
 import com.bluebird.ShortMemo.accessibility.BroadcastReceiverApp
 import com.bluebird.ShortMemo.accessibility.FloatingViewService
 import com.bluebird.ShortMemo.accessibility.FunNotification
@@ -20,17 +22,17 @@ import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
 import kotlinx.android.synthetic.main.activity_main.btn_set
 import kotlinx.android.synthetic.main.activity_option.*
+import kotlinx.android.synthetic.main.activity_write.*
 
 
 class OptionActivity: AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_option)
         //AddMob
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
-
+        setAdView()
         btn_rec()
         btn_set()
 
@@ -116,6 +118,18 @@ class OptionActivity: AppCompatActivity() {
             }
         })
 
+        layout_purchase.setOnClickListener(View.OnClickListener {
+            BillingManager(this).processToPurchase()  //playstore client 설정
+        })
+    }
+
+    private fun setAdView() {
+        val sharedPref = this.getSharedPreferences(getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
+        if(sharedPref.getBoolean(getString(R.string.option_windowShortcut), false) == false) {
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
+            adView.visibility = View.VISIBLE
+        }
     }
 
     override fun onBackPressed() {

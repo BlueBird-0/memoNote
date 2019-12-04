@@ -1,9 +1,11 @@
 package com.bluebird.ShortMemo.record
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.BaseColumns
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bluebird.ShortMemo.*
 import com.google.android.gms.ads.AdRequest
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_write.*
 import java.util.*
 
 
@@ -23,8 +26,7 @@ class RecordActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
         //AddMob
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        setAdView()
 
         initRecordList()
 
@@ -82,6 +84,15 @@ class RecordActivity: AppCompatActivity() {
                 //val pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
                 list.add(noteVM)
             }
+        }
+    }
+
+    private fun setAdView() {
+        val sharedPref = this.getSharedPreferences(getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
+        if(sharedPref.getBoolean(getString(R.string.option_windowShortcut), false) == false) {
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
+            adView.visibility = View.VISIBLE
         }
     }
 

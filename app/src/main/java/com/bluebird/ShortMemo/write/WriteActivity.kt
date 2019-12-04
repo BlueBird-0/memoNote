@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -22,6 +23,7 @@ import com.bluebird.ShortMemo.accessibility.WidgetProvider
 import com.google.android.gms.ads.AdRequest
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_write.*
 import kotlinx.android.synthetic.main.activity_write.fab_cam
 import kotlinx.android.synthetic.main.activity_write.fab_mic
@@ -38,8 +40,7 @@ class WriteActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
-        val adRequest = AdRequest.Builder().build()
-        adView_write.loadAd(adRequest)
+        setAdView()
 
         note = Note(0, "")
         // 전달 된 노트 실행
@@ -99,6 +100,15 @@ class WriteActivity : AppCompatActivity() {
                         imageLoad()
                     }
                 })
+    }
+
+    private fun setAdView() {
+        val sharedPref = this.getSharedPreferences(getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
+        if(sharedPref.getBoolean(getString(R.string.option_windowShortcut), false) == false) {
+            val adRequest = AdRequest.Builder().build()
+            adView_write.loadAd(adRequest)
+            adView_write.visibility = View.VISIBLE
+        }
     }
 
     private fun setRecognizer(){

@@ -12,6 +12,7 @@
 
     <string name="option_title_synchronization">동기화</string>
     <string name="option_title_access">접근성</string>
+    <string name="option_title_invite">요청</string>
 
     <string name="option_kakaoLogin">카카오 계정 연동</string>
     <string name="option_autoUpload">클라우드 자동올리기</string>
@@ -26,6 +27,8 @@
     <string name="option_autoExecution">자동실행</string>   <!-- T/N -->
     <string name="option_windowShortcut">퀵 버튼</string>   <!-- T/N -->
     <string name="option_statusBar">상태 바(알림 띄워두기)</string>   <!-- T/N -->
+    <string name="option_purchase">개발자 사료주기</string>   <!-- T/N -->
+
 
     <string name="alert_message_kakao">개발중인 기능입니다</string>
     <string name="alert_message_checkAutoexceution">잠금화면을 열 때, 앱을 실행합니다</string>
