@@ -118,8 +118,11 @@ class OptionActivity: AppCompatActivity() {
             }
         })
 
+
+        val billingManager = BillingManager(this)
+        billingManager.connectBillingClient()
         layout_purchase.setOnClickListener(View.OnClickListener {
-            BillingManager(this).processToPurchase()  //playstore client 설정
+            billingManager.processToPurchase()  //playstore client 설정
         })
     }
 

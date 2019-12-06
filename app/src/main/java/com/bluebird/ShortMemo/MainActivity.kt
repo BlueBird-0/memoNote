@@ -35,6 +35,8 @@ import com.bluebird.ShortMemo.tutorial.TutorialActivity
 import com.bluebird.ShortMemo.write.WriteActivity
 
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
@@ -79,7 +81,7 @@ class MainActivity : AppCompatActivity(){
         //initialize
         checkPermissions()
         //ADDMOB
-        MobileAds.initialize(this)
+        MobileAds.initialize(this, "ca-app-pub-8004776504808264~7066223224")
         setAdView()
         //testcode
         //TODO Notification
@@ -251,7 +253,12 @@ class MainActivity : AppCompatActivity(){
     private fun setAdView() {
         val sharedPref = this.getSharedPreferences(getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
         if(sharedPref.getBoolean(getString(R.string.option_windowShortcut), false) == false) {
-            val adRequest = AdRequest.Builder().build()
+            Log.d("test001_adView", "광고 노출")
+            val adRequest = AdRequest.Builder()
+//                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//                    .addTestDevice("D7C25E2ED3376194EC9396F596C65900")
+                    .build()
+
             adView.loadAd(adRequest)
             adView.visibility = View.VISIBLE
         }

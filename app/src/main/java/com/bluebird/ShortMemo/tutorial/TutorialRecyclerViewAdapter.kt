@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.bluebird.ShortMemo.accessibility.WidgetProvider
+import com.bluebird.ShortMemo.tutorial.TutorialActivity
 import com.bluebird.ShortMemo.tutorial.TutorialItemTouchHelperCallBack
 import kotlinx.android.synthetic.main.activity_tutorial.view.*
 import kotlinx.android.synthetic.main.list_item.view.*
@@ -124,6 +125,9 @@ class TutorialRecyclerViewAdapter(private val context: Context, private val item
     }
 
     private fun swapItems(positionFrom: Int, positionTo: Int) {
+        if(positionTo  >= TutorialActivity.list.size) { //리스트 마지막 벗어나는 에러 처리
+            return
+        }
         tutorial_longclick++
         mainLayout.guideText.text = "옆으로 밀어 메모를 삭제합니다"
         Log.d("Test001_Swap", "PositionFrom: "+ positionFrom)

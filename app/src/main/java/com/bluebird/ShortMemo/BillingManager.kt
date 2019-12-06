@@ -2,14 +2,30 @@ package com.bluebird.ShortMemo
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
+import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import com.android.billingclient.api.*
+import com.android.vending.billing.IInAppBillingService
+import org.json.JSONException
+import org.json.JSONObject
+
 
 class BillingManager(val activity: Activity) : PurchasesUpdatedListener {
     val billingClient = BillingClient.newBuilder(activity).enablePendingPurchases().setListener(this).build()
     fun processToPurchase() {
-        connectBillingClient()
-        showPurchaseDialog(billingClient)
+//        connectBillingClient()
+
+        AlertDialog.Builder(activity)
+                //.setTitle(R.string.app_name)
+                .setTitle(R.string.alert)
+                .setMessage(R.string.alert_billing_message)
+                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                    showPurchaseDialog(billingClient)
+                })
+                .show()
     }
 
 
@@ -19,18 +35,21 @@ class BillingManager(val activity: Activity) : PurchasesUpdatedListener {
                 Log.d("test001", "billing 1")
                 if(billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     Log.d("test001", "billing 2")
-                    //결제 확인
-                    billingClient.querySkuDetailsAsync(makeBillingParams().build()) {billingResult, purchaseHistoryRecordList ->
-                        if(billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                            if(purchaseHistoryRecordList != null && purchaseHistoryRecordList.size>0){
-                                val sharedPref = activity.getSharedPreferences(activity.getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
-                                sharedPref.edit().putBoolean(activity.getString(R.string.option_windowShortcut), true).commit()
-                            }else {
-                                val sharedPref = activity.getSharedPreferences(activity.getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
-                                sharedPref.edit().putBoolean(activity.getString(R.string.option_windowShortcut), false).commit()
-                            }
-                        }
-                    }
+                    //결제 확인(환불)
+//                    billingClient.querySkuDetailsAsync(makeBillingParams().build()) {billingResult, purchaseHistoryRecordList ->
+//                        if(billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+//                            if(purchaseHistoryRecordList != null && purchaseHistoryRecordList.size>0){
+//                                Log.d("test001", "billing 2(list):"+purchaseHistoryRecordList)
+//                                Log.d("test001", "billing 2-1")
+//                                val sharedPref = activity.getSharedPreferences(activity.getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
+//                                sharedPref.edit().putBoolean(activity.getString(R.string.option_windowShortcut), true).commit()
+//                            }else {
+//                                Log.d("test001", "billing 2-2")
+//                                val sharedPref = activity.getSharedPreferences(activity.getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
+//                                sharedPref.edit().putBoolean(activity.getString(R.string.option_windowShortcut), false).commit()
+//                            }
+//                        }
+//                    }
                 }
             }
             override fun onBillingServiceDisconnected() {
@@ -71,19 +90,28 @@ class BillingManager(val activity: Activity) : PurchasesUpdatedListener {
         }
     }
 
+    //결제 확인 창
     override fun onPurchasesUpdated(billingResult: BillingResult?, purchases: MutableList<Purchase>?) {
         Log.d("test001", "billing 6")
         if(billingResult?.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
             for (purchase in purchases) {
                 //handle data
+                Log.d("test001", "billing 7")
                 val sharedPref = activity.getSharedPreferences(activity.getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
                 sharedPref.edit().putBoolean(activity.getString(R.string.option_windowShortcut), true).commit()
 
                 handlePurchase(purchase)
             }
         }else if(billingResult?.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
+            Log.d("test001", "billing 8")
             // Handle an error caused by a user cancelling the purchase flow.
         }else {
+            if(purchases != null) {
+                Log.d("test001", "billing 10 : delete purchase")
+                for (purchase in purchases)
+                    handlePurchase(purchase)
+            }
+            Log.d("test001", "billing 9 : responseCode = "+ billingResult?.responseCode)
             // Handle any other error codes.
         }
     }

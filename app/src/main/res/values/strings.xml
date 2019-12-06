@@ -39,6 +39,8 @@
     <string name="alert_back_title">글쓰기 종료</string>
     <string name="alert_tutorial">아직 이용할 수 없습니다</string>
     <string name="alert_tutorial_longclick">길게 누르세요</string>
+    <string name="alert">주의</string>
+    <string name="alert_billing_message">이 기능은 어플 사용에 아무런 영향을 미치지 않습니다</string>
     <string name="yes">네</string>
     <string name="no">아니오</string>
 </resources>

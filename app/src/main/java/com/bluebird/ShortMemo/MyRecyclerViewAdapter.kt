@@ -12,16 +12,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.bluebird.ShortMemo.accessibility.WidgetProvider
 import com.bluebird.ShortMemo.write.WriteActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_item.view.*
 
 // 아이템 리스트
 class ItemViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
-
     private var layout: ConstraintLayout = itemView.item_mainLayout
     private var titleView: TextView = itemView.item_content
     private var itemImageView: FrameLayout = itemView.item_image
@@ -109,6 +110,9 @@ class MyRecyclerViewAdapter(private val context: Context, private val items: Mut
 
 
     private fun swapItems(positionFrom: Int, positionTo: Int) {
+        if(positionTo  >= MainActivity.list.size) { //리스트 마지막 벗어나는 에러 처리
+            return
+        }
         Log.d("Test001_Swap", "PositionFrom: "+ positionFrom)
         Log.d("Test001_Swap", "PositionTo : " + positionTo)
         //Collections.swap(items, positionFrom, positionTo)

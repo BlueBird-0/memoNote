@@ -230,7 +230,6 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                 val whereId = "${BaseColumns._ID} = ${From_Id}"
                 db.update(FeedEntry.TABLE_NAME,  values,  whereId, null)
             }
-
         }
     }
 
