@@ -31,7 +31,7 @@ class TutorialActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
-        guideText.text = "'+' 버튼으로 메모를 추가합니다"
+        guideText.text = getString(R.string.tutorial_message1)
 
         fab()
         initSwi()
@@ -124,10 +124,10 @@ class TutorialActivity : AppCompatActivity() {
                 {
                     var addedNote = NoteViewModel(data!!.getParcelableExtra<Note>("note"))
                     list.add(addedNote)
-                    list.add(NoteViewModel(Note(0, "테스트용 메모")))
+                    list.add(NoteViewModel(Note(0, getString(R.string.tutorial_message4))))
                     note_list_tutorial.adapter?.notifyDataSetChanged()
                     Log.d("test001_tutorial", "튜토리얼 2번")
-                    guideText.text = "길게눌러 위치를 바꿉니다."
+                    guideText.text = getString(R.string.tutorial_message3)
                     hint.elevation = dipToPixels(8f)
                     note_list_tutorial.elevation = dipToPixels(10f)
                 }

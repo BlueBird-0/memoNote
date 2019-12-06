@@ -42,7 +42,7 @@ class TutorialWriteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial_write)
 
-        guideText.text = "'↑' 버튼으로 메모를 저장합니다"
+        guideText.text = getString(R.string.tutorial_message2)
 
         note = Note(0, "")
         // 전달 된 노트 실행

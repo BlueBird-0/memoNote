@@ -88,16 +88,16 @@ class TutorialRecyclerViewAdapter(private val context: Context, private val item
 //            FeedReaderDbHelper.checkData(context, position+1)
             notifyItemRemoved(position)
 
-            mainLayout.guideText.text = "기록을 확인합니다"
+            mainLayout.guideText.text = context.getString(R.string.tutorial_message6)
             mainLayout.note_list_tutorial.elevation = dipToPixels(5f)
             mainLayout.btn_rec_tutorial.elevation = dipToPixels(10f)
             mainLayout.btn_rec_tutorial.setOnClickListener {
-                mainLayout.guideText.text = "설정을 변경합니다"
+                mainLayout.guideText.text = context.getString(R.string.tutorial_message7)
                 mainLayout.btn_rec_tutorial.elevation = dipToPixels(5f)
                 mainLayout.btn_set_tutorial.elevation = dipToPixels(10f)
             }
             mainLayout.btn_set_tutorial.setOnClickListener {
-                mainLayout.guideText.text = "도움말을 끝냅니다."
+                mainLayout.guideText.text = context.getString(R.string.tutorial_message8)
                 mainLayout.btn_set_tutorial.elevation = dipToPixels(5f)
                 mainLayout.btn_ok.visibility = View.VISIBLE
                 mainLayout.btn_ok.setOnClickListener {
@@ -129,7 +129,7 @@ class TutorialRecyclerViewAdapter(private val context: Context, private val item
             return
         }
         tutorial_longclick++
-        mainLayout.guideText.text = "옆으로 밀어 메모를 삭제합니다"
+        mainLayout.guideText.text = context.getString(R.string.tutorial_message5)
         Log.d("Test001_Swap", "PositionFrom: "+ positionFrom)
         Log.d("Test001_Swap", "PositionTo : " + positionTo)
 

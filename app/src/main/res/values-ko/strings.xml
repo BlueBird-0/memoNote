@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">단기메모</string>
+
+    <string name="app_done">Done</string>
+    <string name="app_connect">Connect</string>
+
+    <string name="str_picture">사진</string>
+    <string name="str_statusbar">메모가 없습니다</string>
+    <string name="str_check">Good!</string>
+    <string name="sdf_note">"MM월d일  HH:mm"</string>
+
+
+    <string name="option_title_synchronization">동기화</string>
+    <string name="option_title_access">접근성</string>
+    <string name="option_title_invite">요청</string>
+
+    <string name="option_kakaoLogin">카카오 계정 연동</string>
+    <string name="option_autoUpload">클라우드 자동올리기</string>
+    <string name="option_pc">PC(Window &amp; Mac)</string>
+
+
+    <string name="USER_SETTINGS_PREF">userSettings</string>
+
+
+    <string name="option_tutorial">튜토리얼</string>    <!-- T/N -->
+    <string name="option_widget">위젯</string>    <!-- T/N -->
+    <string name="option_autoExecution">자동실행</string>   <!-- T/N -->
+    <string name="option_windowShortcut">퀵 버튼</string>   <!-- T/N -->
+    <string name="option_statusBar">상태 바(알림 띄워두기)</string>   <!-- T/N -->
+    <string name="option_purchase">개발자 사료주기</string>   <!-- T/N -->
+
+
+    <string name="alert_message_kakao">개발중인 기능입니다</string>
+    <string name="alert_message_checkAutoexceution">잠금화면을 열 때, 앱을 실행합니다</string>
+    <string name="alert_fail_recode">알아듣지 못했어요</string>
+    <string name="alert_record_message">되돌리겠습니까?</string>
+    <string name="alert_record_title">기록장</string>
+    <string name="alert_back_message">저장 하지 않고 돌아갑니다</string>
+    <string name="alert_back_title">글쓰기 종료</string>
+    <string name="alert_tutorial">아직 이용할 수 없습니다</string>
+    <string name="alert_tutorial_longclick">길게 누르세요</string>
+    <string name="alert">주의</string>
+    <string name="alert_billing_message">이 기능은 어플 사용에 아무런 영향을 미치지 않습니다</string>
+    <string name="yes">네</string>
+    <string name="no">아니오</string>
+
+    <string name="tutorial_message1">\'+\' 버튼으로 메모를 추가합니다</string>
+    <string name="tutorial_message2">\'↑\' 버튼으로 메모를 저장합니다</string>
+    <string name="tutorial_message3">길게눌러 위치를 바꿉니다</string>
+    <string name="tutorial_message4">테스트용 메모</string>
+    <string name="tutorial_message5">옆으로 밀어 메모를 삭제합니다</string>
+    <string name="tutorial_message6">기록을 확인합니다</string>
+    <string name="tutorial_message7">설정을 변경합니다</string>
+    <string name="tutorial_message8">도움말을 끝냅니다</string>
+
+</resources>
