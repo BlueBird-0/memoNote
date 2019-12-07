@@ -40,7 +40,7 @@ class WriteActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write)
-        setAdView()
+//        setAdView()
 
         note = Note(0, "")
         // 전달 된 노트 실행

@@ -32,7 +32,7 @@ class OptionActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_option)
         //AddMob
-        setAdView()
+//        setAdView()
         btn_rec()
         btn_set()
 

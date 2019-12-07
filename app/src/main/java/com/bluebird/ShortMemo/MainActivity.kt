@@ -81,8 +81,8 @@ class MainActivity : AppCompatActivity(){
         //initialize
         checkPermissions()
         //ADDMOB
-        MobileAds.initialize(this, "ca-app-pub-8004776504808264~7066223224")
-        setAdView()
+//        MobileAds.initialize(this, "ca-app-pub-8004776504808264~7066223224")
+//        setAdView()
         //testcode
         //TODO Notification
         Log.d("Test001_service", "isServiceRunning : " + isServiceRunning(BackgroundService::class.java))
