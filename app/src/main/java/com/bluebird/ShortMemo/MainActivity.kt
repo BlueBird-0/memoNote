@@ -316,6 +316,9 @@ class MainActivity : AppCompatActivity(){
                 //.setSelectedUriList(selectedUriList)
                 .showMultiImage(object : TedBottomSheetDialogFragment.OnMultiImageSelectedListener {
                     override fun onImagesSelected(uriList: List<Uri>) {
+                        if(uriList.isEmpty()) {
+                            return
+                        }
                         // here is selected image uri list
                         val sdf : SimpleDateFormat = SimpleDateFormat(getString(R.string.sdf_note))
                         val content = sdf.format(Date())

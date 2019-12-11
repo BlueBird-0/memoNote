@@ -52,9 +52,11 @@ class BroadcastReceiverApp : BroadcastReceiver() {
             val noteId = FeedReaderDbHelper.getIdFromIndex(context, position!!.plus(1))
 
             val mainIntent = Intent(context, MainActivity::class.java)
+            mainIntent.flags += Intent.FLAG_ACTIVITY_NEW_TASK
             context?.startActivity(mainIntent)
             val writeIntent = Intent(context, WriteActivity::class.java)
             writeIntent.putExtra(BaseColumns._ID, noteId)
+            writeIntent.flags += Intent.FLAG_ACTIVITY_NEW_TASK
             context?.startActivity(writeIntent)
             Log.d("Test001_Broadcast", "Called [ACTION WRITE] from Widget")
         }
