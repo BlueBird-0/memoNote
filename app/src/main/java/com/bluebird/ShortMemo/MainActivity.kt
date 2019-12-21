@@ -27,17 +27,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.billingclient.api.*
 import com.bluebird.ShortMemo.accessibility.BackgroundService
 import com.bluebird.ShortMemo.accessibility.WidgetProvider
 import com.bluebird.ShortMemo.record.RecordActivity
 import com.bluebird.ShortMemo.tutorial.TutorialActivity
+import com.bluebird.ShortMemo.write.MySessionStatusCallback
 import com.bluebird.ShortMemo.write.WriteActivity
 
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.kakao.auth.IApplicationConfig
+import com.kakao.auth.KakaoAdapter
+import com.kakao.auth.KakaoSDK
+import com.kakao.auth.Session
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -55,7 +56,6 @@ class MainActivity : AppCompatActivity(){
         val WRITE_NOTE_REQUEST_CODE = 1001
         val UPDATE_NOTE_REQUEST_CODE = 1002
         var list = mutableListOf<ViewModel>()
-
     }
 
     lateinit var mRecognizer: SpeechRecognizer
@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity(){
         //ADDMOB
 //        MobileAds.initialize(this, "ca-app-pub-8004776504808264~7066223224")
 //        setAdView()
-        //testcode
         //TODO Notification
         Log.d("Test001_service", "isServiceRunning : " + isServiceRunning(BackgroundService::class.java))
         if(! isServiceRunning(BackgroundService::class.java)) {

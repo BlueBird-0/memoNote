@@ -17,7 +17,9 @@ import com.bluebird.ShortMemo.accessibility.BroadcastReceiverApp
 import com.bluebird.ShortMemo.accessibility.FloatingViewService
 import com.bluebird.ShortMemo.accessibility.FunNotification
 import com.bluebird.ShortMemo.record.RecordActivity
+import com.bluebird.ShortMemo.write.MySessionStatusCallback
 import com.google.android.gms.ads.AdRequest
+import com.kakao.auth.Session
 import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
 import kotlinx.android.synthetic.main.activity_main.btn_set
@@ -35,6 +37,13 @@ class OptionActivity: AppCompatActivity() {
 //        setAdView()
         btn_rec()
         btn_set()
+
+
+        //testcode
+        var session = Session.getCurrentSession()
+        var mySessionCallback = MySessionStatusCallback()
+        session.addCallback(mySessionCallback)
+
 
         //activity code
         val sharedPref = this.getSharedPreferences(getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
