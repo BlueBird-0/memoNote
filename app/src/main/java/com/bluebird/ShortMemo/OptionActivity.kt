@@ -12,23 +12,21 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
-import com.android.billingclient.api.*
 import com.bluebird.ShortMemo.accessibility.BroadcastReceiverApp
 import com.bluebird.ShortMemo.accessibility.FloatingViewService
 import com.bluebird.ShortMemo.accessibility.FunNotification
 import com.bluebird.ShortMemo.record.RecordActivity
-import com.bluebird.ShortMemo.write.MySessionStatusCallback
 import com.google.android.gms.ads.AdRequest
+import com.kakao.auth.AuthType
 import com.kakao.auth.Session
 import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
 import kotlinx.android.synthetic.main.activity_main.btn_set
 import kotlinx.android.synthetic.main.activity_option.*
-import kotlinx.android.synthetic.main.activity_write.*
 
 
 class OptionActivity: AppCompatActivity() {
-
+    lateinit var mySessionCallback : MySessionStatusCallback
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -39,10 +37,11 @@ class OptionActivity: AppCompatActivity() {
         btn_set()
 
 
-        //testcode
+//        testcode
         var session = Session.getCurrentSession()
-        var mySessionCallback = MySessionStatusCallback()
+        mySessionCallback = MySessionStatusCallback()
         session.addCallback(mySessionCallback)
+        session.checkAndImplicitOpen()
 
 
         //activity code
@@ -55,8 +54,10 @@ class OptionActivity: AppCompatActivity() {
         switch_autoexec.isChecked = usingAutoExecution
 
         layout_kakao.setOnClickListener(View.OnClickListener {
-            Toast.makeText(applicationContext, getString(R.string.alert_message_kakao), Toast.LENGTH_LONG).show()
-            sharedPref.edit().putBoolean(getString(R.string.option_autoExecution), true).commit()
+//            Toast.makeText(applicationContext, getString(R.string.alert_message_kakao), Toast.LENGTH_LONG).show()
+//            sharedPref.edit().putBoolean(getString(R.string.option_autoExecution), true).commit()
+
+            session.open(AuthType.KAKAO_TALK, this)
         })
 
 
@@ -133,6 +134,14 @@ class OptionActivity: AppCompatActivity() {
         layout_purchase.setOnClickListener(View.OnClickListener {
             billingManager.processToPurchase()  //playstore client 설정
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            Log.d("test001", "call onActivity Result")
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun setAdView() {

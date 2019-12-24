@@ -31,13 +31,10 @@ import com.bluebird.ShortMemo.accessibility.BackgroundService
 import com.bluebird.ShortMemo.accessibility.WidgetProvider
 import com.bluebird.ShortMemo.record.RecordActivity
 import com.bluebird.ShortMemo.tutorial.TutorialActivity
-import com.bluebird.ShortMemo.write.MySessionStatusCallback
 import com.bluebird.ShortMemo.write.WriteActivity
 
 import com.google.android.gms.ads.AdRequest
-import com.kakao.auth.IApplicationConfig
-import com.kakao.auth.KakaoAdapter
-import com.kakao.auth.KakaoSDK
+import com.kakao.auth.AuthType
 import com.kakao.auth.Session
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
@@ -56,6 +53,9 @@ class MainActivity : AppCompatActivity(){
         val WRITE_NOTE_REQUEST_CODE = 1001
         val UPDATE_NOTE_REQUEST_CODE = 1002
         var list = mutableListOf<ViewModel>()
+
+        lateinit var session : Session
+        lateinit var mySessionCallback : MySessionStatusCallback
     }
 
     lateinit var mRecognizer: SpeechRecognizer
@@ -83,6 +83,13 @@ class MainActivity : AppCompatActivity(){
         //ADDMOB
 //        MobileAds.initialize(this, "ca-app-pub-8004776504808264~7066223224")
 //        setAdView()
+
+        //testcode
+        session = Session.getCurrentSession()
+        mySessionCallback = MySessionStatusCallback()
+        session.addCallback(mySessionCallback)
+        session.checkAndImplicitOpen()
+
         //TODO Notification
         Log.d("Test001_service", "isServiceRunning : " + isServiceRunning(BackgroundService::class.java))
         if(! isServiceRunning(BackgroundService::class.java)) {
@@ -158,6 +165,18 @@ class MainActivity : AppCompatActivity(){
     override fun onResume() {
         super.onResume()
         note_list.adapter?.notifyDataSetChanged()
+
+
+        Log.d("test001", "session onResume")
+        if(session.isClosed() ) {
+            //logout state
+        }else {
+            // login state
+            if(session.isOpenable()) {
+                session.checkAndImplicitOpen()
+                Log.d("test001", "session opend")
+            }
+        }
     }
 
     private fun isServiceRunning(serviceClass : Class<*>): Boolean {

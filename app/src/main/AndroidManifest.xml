@@ -49,6 +49,8 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name="com.bluebird.ShortMemo.tutorial.TutorialWriteActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.bluebird.ShortMemo.KakaoLoginActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
 
 

@@ -1,8 +1,15 @@
 package com.bluebird.ShortMemo
 
+import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.pm.PackageManager
+import android.util.Base64
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.kakao.auth.*
+import com.kakao.util.helper.Utility.getPackageInfo
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 
 class TestApplication : MultiDexApplication() {
@@ -22,7 +29,21 @@ class TestApplication : MultiDexApplication() {
         Log.d("test001", "init test")
         instance = this
         KakaoSDK.init(KakaoSDKAdapter())
-//        Session.getCurrentSession()
+//        Log.d("test001", "KeyHash : "+getKeyHash(applicationContext))
+    }
+
+    fun getKeyHash(context: Context?): String? {
+        val packageInfo = getPackageInfo(context, PackageManager.GET_SIGNATURES) ?: return null
+        for (signature in packageInfo.signatures) {
+            try {
+                val md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                return Base64.encodeToString(md.digest(), Base64.NO_WRAP)
+            } catch (e: NoSuchAlgorithmException) {
+                Log.w(TAG, "Unable to get MessageDigest. signature=$signature", e)
+            }
+        }
+        return null
     }
 }
 
@@ -35,7 +56,7 @@ private class KakaoSDKAdapter : KakaoAdapter() {
     override fun getSessionConfig(): ISessionConfig {
         return object : ISessionConfig {
             override fun getAuthTypes(): Array<AuthType> {
-                return arrayOf(AuthType.KAKAO_LOGIN_ALL)
+                return arrayOf(AuthType.KAKAO_TALK_ONLY)
             }
 
             override fun isUsingWebviewTimer(): Boolean {
@@ -51,7 +72,7 @@ private class KakaoSDKAdapter : KakaoAdapter() {
             }
 
             override fun isSaveFormData(): Boolean {
-                return true
+                return false
             }
         }
     }
