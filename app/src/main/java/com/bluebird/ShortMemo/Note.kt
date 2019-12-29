@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 @Parcelize
 data class Note (var id: Long, var content:String, var createdTime:Date? = Date(), var checkedTime:Date? = null, var pictureUri : ArrayList<Uri>? = null) : Parcelable
@@ -22,6 +23,16 @@ data class Note (var id: Long, var content:String, var createdTime:Date? = Date(
                         pictureUri!!.add(Uri.parse(str))
                     }
                 }
+    }
+
+    fun getHashMap() : HashMap <String, Any?>{
+        return hashMapOf(
+                "id" to id,
+                "content" to content,
+                "createdTime" to createdTime,
+                "checkedTime" to checkedTime,
+                "pictureUri" to "null"
+        )
     }
 }
 

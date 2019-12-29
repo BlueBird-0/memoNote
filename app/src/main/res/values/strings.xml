@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">ShortMemo</string>
-    <string name="kakao_app_key">f5150b4b81e3baf9967e157295d2d93a</string>
+    <string name="kakao_app_key">e64db7cd5bfe39fbc7eaa50706606695</string>
 
     <string name="app_done">Done</string>
     <string name="app_connect">Connect</string>
@@ -24,6 +24,8 @@
     <string name="USER_SETTINGS_PREF">userSettings</string>
 
 
+    <string name="option_kakaoLogined">syncKakao</string>    <!-- T/N -->
+    <string name="option_kakaoId">kakaoId</string>    <!-- String -->
     <string name="option_tutorial">tutorial</string>    <!-- T/N -->
     <string name="option_widget">widget</string>    <!-- T/N -->
     <string name="option_autoExecution">auto execution</string>   <!-- T/N -->

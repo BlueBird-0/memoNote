@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "611347952403",
+    "firebase_url": "https://memonote-a08e2.firebaseio.com",
+    "project_id": "memonote-a08e2",
+    "storage_bucket": "memonote-a08e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611347952403:android:f9156951f3930eb253e0e6",
+        "android_client_info": {
+          "package_name": "com.bluebird.ShortMemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611347952403-1gm38lq9unmgpndbgi0bc1ig84n20a8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAemCxIzGHHPcoooHZUuHU7ioBbxElFR4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611347952403-1gm38lq9unmgpndbgi0bc1ig84n20a8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

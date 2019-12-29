@@ -18,7 +18,7 @@ class TestApplication : MultiDexApplication() {
 
         fun getGlobalApplicationContext() : TestApplication {
             if(instance == null) {
-                throw IllegalStateException("This Application does not inherit com.kakao.GlobalApplication");
+                throw IllegalStateException("This Application does not inherit com.kakao.GlobalApplication")
             }
             return instance
         }
@@ -29,7 +29,7 @@ class TestApplication : MultiDexApplication() {
         Log.d("test001", "init test")
         instance = this
         KakaoSDK.init(KakaoSDKAdapter())
-//        Log.d("test001", "KeyHash : "+getKeyHash(applicationContext))
+        Log.d("test001", "KeyHash : "+getKeyHash(applicationContext))
     }
 
     fun getKeyHash(context: Context?): String? {
@@ -56,7 +56,7 @@ private class KakaoSDKAdapter : KakaoAdapter() {
     override fun getSessionConfig(): ISessionConfig {
         return object : ISessionConfig {
             override fun getAuthTypes(): Array<AuthType> {
-                return arrayOf(AuthType.KAKAO_TALK_ONLY)
+                return arrayOf(AuthType.KAKAO_LOGIN_ALL)
             }
 
             override fun isUsingWebviewTimer(): Boolean {
@@ -72,7 +72,7 @@ private class KakaoSDKAdapter : KakaoAdapter() {
             }
 
             override fun isSaveFormData(): Boolean {
-                return false
+                return true
             }
         }
     }

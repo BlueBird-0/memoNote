@@ -23,6 +23,9 @@
     <string name="USER_SETTINGS_PREF">userSettings</string>
 
 
+
+    <string name="option_kakaoLogined">syncKakao</string>    <!-- T/N -->
+    <string name="option_kakaoId">kakaoId</string>    <!-- String -->
     <string name="option_tutorial">튜토리얼</string>    <!-- T/N -->
     <string name="option_widget">위젯</string>    <!-- T/N -->
     <string name="option_autoExecution">자동실행</string>   <!-- T/N -->
@@ -36,7 +39,7 @@
     <string name="alert_fail_recode">알아듣지 못했어요</string>
     <string name="alert_record_message">되돌리겠습니까?</string>
     <string name="alert_record_title">기록장</string>
-    <string name="alert_back_message">저장 하지 않고 돌아갑니다</string>
+    <string name="alert_back_message">글쓰기를 취소하고 돌아갑니다</string>
     <string name="alert_back_title">글쓰기 종료</string>
     <string name="alert_tutorial">아직 이용할 수 없습니다</string>
     <string name="alert_tutorial_longclick">길게 누르세요</string>

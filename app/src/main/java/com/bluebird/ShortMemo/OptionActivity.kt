@@ -19,6 +19,9 @@ import com.bluebird.ShortMemo.record.RecordActivity
 import com.google.android.gms.ads.AdRequest
 import com.kakao.auth.AuthType
 import com.kakao.auth.Session
+import com.kakao.usermgmt.LoginButton
+import com.kakao.usermgmt.UserManagement
+import com.kakao.usermgmt.callback.LogoutResponseCallback
 import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
 import kotlinx.android.synthetic.main.activity_main.btn_set
@@ -36,13 +39,7 @@ class OptionActivity: AppCompatActivity() {
         btn_rec()
         btn_set()
 
-
 //        testcode
-        var session = Session.getCurrentSession()
-        mySessionCallback = MySessionStatusCallback()
-        session.addCallback(mySessionCallback)
-        session.checkAndImplicitOpen()
-
 
         //activity code
         val sharedPref = this.getSharedPreferences(getString(R.string.USER_SETTINGS_PREF), Context.MODE_PRIVATE)
@@ -53,11 +50,25 @@ class OptionActivity: AppCompatActivity() {
         var usingAutoExecution = sharedPref.getBoolean(getString(R.string.option_autoExecution), false)
         switch_autoexec.isChecked = usingAutoExecution
 
+
+        if(Session.getCurrentSession().isOpened) {
+            UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
+                override fun onCompleteLogout() {
+                    Log.d("test001" ,"로그아웃드!")
+                }
+            })
+        }
         layout_kakao.setOnClickListener(View.OnClickListener {
 //            Toast.makeText(applicationContext, getString(R.string.alert_message_kakao), Toast.LENGTH_LONG).show()
 //            sharedPref.edit().putBoolean(getString(R.string.option_autoExecution), true).commit()
+            var btn = findViewById<LoginButton>(R.id.kakaoLoginBtn)
+            btn.performClick()
 
-            session.open(AuthType.KAKAO_TALK, this)
+//            var session = Session.getCurrentSession()
+//            mySessionCallback = MySessionStatusCallback(this)
+//            session.addCallback(mySessionCallback)
+//            session.checkAndImplicitOpen()
+//            session.open(AuthType.KAKAO_LOGIN_ALL, this)
         })
 
 

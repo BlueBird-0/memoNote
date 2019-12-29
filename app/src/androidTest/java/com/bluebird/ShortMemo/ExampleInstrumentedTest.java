@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.bluebird.testapplication", appContext.getPackageName());
+        assertEquals("com.bluebird.ShortMemo", appContext.getPackageName());
     }
 }

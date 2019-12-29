@@ -67,8 +67,12 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                 put(FeedEntry.COLUMNS_NOTE_PICTURE_URI, note.pictureUri.toString())
 
             }
+
             val db = dbHelper.writableDatabase
-            return db.insert(FeedEntry.TABLE_NAME, null, values)
+            note.id = db.insert(FeedEntry.TABLE_NAME, null, values)
+            //testcode
+            FireStoreDbHelper.write(context, note)
+            return note.id
         }
         fun updateData(context: Context, note: Note, id: Long) {
             /* db 데이터 업데이트 */

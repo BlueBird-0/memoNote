@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -9,7 +10,7 @@ android {
         abortOnError false
     }
     defaultConfig {
-        applicationId "com.bluebird.testapplication"
+        applicationId "com.bluebird.ShortMemo"
         minSdkVersion 23
         targetSdkVersion 29
         multiDexEnabled true
@@ -53,6 +54,7 @@ dependencies {
     implementation "com.github.firdausmaulan:GlideSlider:1.5.1"
     implementation 'com.android.billingclient:billing:2.0.3' //GooglePlay 결제모듈
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION//카카오 로그인
+    implementation 'com.google.firebase:firebase-firestore:21.3.1' //firestore
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 }
