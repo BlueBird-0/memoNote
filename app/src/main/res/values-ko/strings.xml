@@ -3,7 +3,7 @@
     <string name="kakao_app_key">f5150b4b81e3baf9967e157295d2d93a</string>
 
     <string name="app_done">Done</string>
-    <string name="app_connect">Connect</string>
+    <string name="app_connect">Connected</string>
 
     <string name="str_picture">사진</string>
     <string name="str_statusbar">메모가 없습니다</string>

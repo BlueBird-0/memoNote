@@ -18,10 +18,15 @@ import com.bluebird.ShortMemo.accessibility.FunNotification
 import com.bluebird.ShortMemo.record.RecordActivity
 import com.google.android.gms.ads.AdRequest
 import com.kakao.auth.AuthType
+import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
+import com.kakao.network.ErrorResult
 import com.kakao.usermgmt.LoginButton
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
+import com.kakao.usermgmt.callback.MeV2ResponseCallback
+import com.kakao.usermgmt.response.MeV2Response
+import com.kakao.util.exception.KakaoException
 import kotlinx.android.synthetic.main.activity_main.adView
 import kotlinx.android.synthetic.main.activity_main.btn_rec
 import kotlinx.android.synthetic.main.activity_main.btn_set
@@ -29,7 +34,6 @@ import kotlinx.android.synthetic.main.activity_option.*
 
 
 class OptionActivity: AppCompatActivity() {
-    lateinit var mySessionCallback : MySessionStatusCallback
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -51,24 +55,33 @@ class OptionActivity: AppCompatActivity() {
         switch_autoexec.isChecked = usingAutoExecution
 
 
-        if(Session.getCurrentSession().isOpened) {
-            UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
-                override fun onCompleteLogout() {
-                    Log.d("test001" ,"로그아웃드!")
-                }
-            })
-        }
-        layout_kakao.setOnClickListener(View.OnClickListener {
-//            Toast.makeText(applicationContext, getString(R.string.alert_message_kakao), Toast.LENGTH_LONG).show()
-//            sharedPref.edit().putBoolean(getString(R.string.option_autoExecution), true).commit()
-            var btn = findViewById<LoginButton>(R.id.kakaoLoginBtn)
-            btn.performClick()
 
-//            var session = Session.getCurrentSession()
-//            mySessionCallback = MySessionStatusCallback(this)
-//            session.addCallback(mySessionCallback)
-//            session.checkAndImplicitOpen()
-//            session.open(AuthType.KAKAO_LOGIN_ALL, this)
+        Session.getCurrentSession().addCallback(object: ISessionCallback {
+            override fun onSessionOpened() {
+                switch_kakaoLogined.isChecked = true
+                UserManagement.getInstance().me(object : MeV2ResponseCallback() {
+                    override fun onSuccess(result: MeV2Response?) {
+                    }
+
+                    override fun onSessionClosed(errorResult: ErrorResult?) {
+
+                    }
+                })
+            }
+            override fun onSessionOpenFailed(exception: KakaoException?){}
+        })
+
+        layout_kakao.setOnClickListener(View.OnClickListener {
+//            if(Session.getCurrentSession().isOpened) {
+            if(switch_kakaoLogined.isChecked) {
+                switch_kakaoLogined.isChecked = false
+                UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
+                    override fun onCompleteLogout() {}
+                })
+            }else {
+                var btn = findViewById<LoginButton>(R.id.kakaoLoginBtn)
+                btn.performClick()
+            }
         })
 
 

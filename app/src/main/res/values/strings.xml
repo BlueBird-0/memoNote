@@ -4,7 +4,7 @@
     <string name="kakao_app_key">e64db7cd5bfe39fbc7eaa50706606695</string>
 
     <string name="app_done">Done</string>
-    <string name="app_connect">Connect</string>
+    <string name="app_connect">Connected</string>
 
     <string name="str_picture">Picture</string>
     <string name="str_statusbar">No record</string>
