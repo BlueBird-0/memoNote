@@ -169,18 +169,6 @@ class MainActivity : AppCompatActivity(){
     override fun onResume() {
         super.onResume()
         note_list.adapter?.notifyDataSetChanged()
-
-
-        Log.d("test001", "session onResume")
-        if(session.isClosed() ) {
-            //logout state
-        }else {
-            // login state
-            if(session.isOpenable()) {
-                session.checkAndImplicitOpen()
-                Log.d("test001", "session opend")
-            }
-        }
     }
 
     private fun isServiceRunning(serviceClass : Class<*>): Boolean {

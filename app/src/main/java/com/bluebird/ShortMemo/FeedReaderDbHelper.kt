@@ -116,12 +116,16 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
             )
             with(cursor){
                 move(position)  //해당 컬럼으로 이동
-                Log.d("Test001_DB", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+                val noteId = cursor.getLong(getColumnIndex("${BaseColumns._ID}"))
+                Log.d("Test001_DB", "ID : ${noteId}")
+                val date = Date()
                 val values = ContentValues().apply {
-                    put(FeedEntry.COLUMNS_NOTE_CHECKED_TIME, sdf.format(Date()))
+                    put(FeedEntry.COLUMNS_NOTE_CHECKED_TIME, sdf.format(date))
                 }
-                val whereId = "${BaseColumns._ID} = ${cursor.getLong(getColumnIndex("${BaseColumns._ID}"))}"
+                val whereId = "${BaseColumns._ID} = ${noteId}"
                 db.update(FeedEntry.TABLE_NAME,  values,  whereId, null)
+
+                FireStoreDbHelper.check(context, noteId, date)
             }
         }
 

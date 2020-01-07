@@ -32,9 +32,7 @@ class BillingManager(val activity: Activity) : PurchasesUpdatedListener {
     fun connectBillingClient() {
         billingClient.startConnection(object: BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
-                Log.d("test001", "billing 1")
                 if(billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    Log.d("test001", "billing 2")
                     //결제 확인(환불)
 //                    billingClient.querySkuDetailsAsync(makeBillingParams().build()) {billingResult, purchaseHistoryRecordList ->
 //                        if(billingResult.responseCode == BillingClient.BillingResponseCode.OK) {

@@ -17,7 +17,6 @@ import com.bluebird.ShortMemo.accessibility.FloatingViewService
 import com.bluebird.ShortMemo.accessibility.FunNotification
 import com.bluebird.ShortMemo.record.RecordActivity
 import com.google.android.gms.ads.AdRequest
-import com.kakao.auth.AuthType
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.network.ErrorResult
@@ -55,28 +54,17 @@ class OptionActivity: AppCompatActivity() {
         switch_autoexec.isChecked = usingAutoExecution
 
 
-
-        Session.getCurrentSession().addCallback(object: ISessionCallback {
-            override fun onSessionOpened() {
-                switch_kakaoLogined.isChecked = true
-                UserManagement.getInstance().me(object : MeV2ResponseCallback() {
-                    override fun onSuccess(result: MeV2Response?) {
-                    }
-
-                    override fun onSessionClosed(errorResult: ErrorResult?) {
-
-                    }
-                })
-            }
-            override fun onSessionOpenFailed(exception: KakaoException?){}
-        })
-
+        switch_kakaoLogined.isChecked = sharedPref.getBoolean(getString(R.string.option_kakaoLogined), false)
         layout_kakao.setOnClickListener(View.OnClickListener {
-//            if(Session.getCurrentSession().isOpened) {
+//            if(Session.getCurrentSession().isOpened) {}
             if(switch_kakaoLogined.isChecked) {
                 switch_kakaoLogined.isChecked = false
                 UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
-                    override fun onCompleteLogout() {}
+                    override fun onCompleteLogout() {
+                        Log.d("test001", "Logouted!")       // Logout Code
+                        sharedPref.edit().putBoolean(getString(R.string.option_kakaoLogined), false).commit()
+                        sharedPref.edit().putString(getString(R.string.option_kakaoId), null).commit()
+                    }
                 })
             }else {
                 var btn = findViewById<LoginButton>(R.id.kakaoLoginBtn)
