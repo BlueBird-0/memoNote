@@ -3,14 +3,9 @@ package com.bluebird.ShortMemo
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
-import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import com.android.billingclient.api.*
-import com.android.vending.billing.IInAppBillingService
-import org.json.JSONException
-import org.json.JSONObject
 
 
 class BillingManager(val activity: Activity) : PurchasesUpdatedListener {

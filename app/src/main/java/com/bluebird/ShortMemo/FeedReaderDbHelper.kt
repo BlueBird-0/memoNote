@@ -43,7 +43,6 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
     }
 
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        //super.onDowngrade(db, oldVersion, newVersion)
         onUpgrade(db , oldVersion, newVersion)
     }
 
@@ -70,7 +69,6 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
 
             val db = dbHelper.writableDatabase
             note.id = db.insert(FeedEntry.TABLE_NAME, null, values)
-            //testcode
             FireStoreDbHelper.write(context, note)
             return note.id
         }

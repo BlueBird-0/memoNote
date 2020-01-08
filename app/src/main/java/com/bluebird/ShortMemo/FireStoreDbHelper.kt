@@ -8,7 +8,6 @@ import java.util.*
 class FireStoreDbHelper {
     companion object {
         var kakaoId : String? = null
-        var pass = null
 
         fun write(context: Context, note : Note) {
             if(!isLogined(context)) return
@@ -17,10 +16,10 @@ class FireStoreDbHelper {
             db.collection("users").document(kakaoId!!).collection("Notes")
                     .add(note.getHashMap())
                     .addOnSuccessListener { documentReference ->
-                        Log.d("test001", "firebase : ${documentReference.id}")
+                        Log.d("test001", "firebase : ${documentReference.id} write success!")
                     }
                     .addOnFailureListener { e ->
-                        Log.d("test001" ,"firebase : ${e}")
+                        Log.d("test001" ,"firebase Error : ${e}")
                     }
         }
 
@@ -49,9 +48,8 @@ class FireStoreDbHelper {
                         Log.d("test001", "addOnSuccessListener")
                         for (document in it.documents) {
                             document.reference.delete()
-                            Log.d("test001", "document checked")
+                            Log.d("test001", "document deleted")
                         }
-
                     }
         }
 

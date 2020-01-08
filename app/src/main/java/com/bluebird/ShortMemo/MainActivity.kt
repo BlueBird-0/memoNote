@@ -34,8 +34,6 @@ import com.bluebird.ShortMemo.tutorial.TutorialActivity
 import com.bluebird.ShortMemo.write.WriteActivity
 
 import com.google.android.gms.ads.AdRequest
-import com.google.firebase.firestore.FirebaseFirestore
-import com.kakao.auth.AuthType
 import com.kakao.auth.Session
 import gun0912.tedbottompicker.TedBottomPicker
 import gun0912.tedbottompicker.TedBottomSheetDialogFragment
