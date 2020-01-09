@@ -9,6 +9,16 @@ class FireStoreDbHelper {
     companion object {
         var kakaoId : String? = null
 
+        fun synchronize(context: Context) {
+            if(!isLogined(context)) return
+            val db = FirebaseFirestore.getInstance()
+            db.collection("users").document(kakaoId!!).collection("Notes")
+                    .get()
+                    .addOnSuccessListener { documentReference ->
+                        Log.d("test001", "get reference count : ${documentReference.documents.size}")
+                    }
+        }
+
         fun write(context: Context, note : Note) {
             if(!isLogined(context)) return
             val db = FirebaseFirestore.getInstance()
