@@ -89,6 +89,8 @@ class MainActivity : AppCompatActivity(){
         session.addCallback(mySessionCallback)
         session.checkAndImplicitOpen()
 
+        FireStoreDbHelper.synchronize(applicationContext)
+
 
 
 
