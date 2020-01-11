@@ -15,15 +15,44 @@ class FireStoreDbHelper {
 
             //init firebase DB
 //            initFirebase(context)
+            var notes = FeedReaderDbHelper.readAllNotes(context) as MutableList
+            for(note in notes) {
+                Log.d("test001", "note ${note.id}: ${note}")
+            }
+
 
             val db = FirebaseFirestore.getInstance()
             db.collection("users").document(kakaoId!!).collection("Notes")
-                    .get()
+                    .whereGreaterThan("id", -1)
+                    .orderBy("id").get()
                     .addOnSuccessListener { documentReference ->
                         Log.d("test001", "get reference count : ${documentReference.documents.size}")
-                        if(documentReference.documents.size != FeedReaderDbHelper.)
+//                        if(documentReference.documents.size != FeedReaderDbHelper.)
+                        var index = 0
                         for(document in documentReference.documents) {
-                            if(document.get("id") == )
+                            Log.d("test001", "firebase : ${document.getLong("id")}")
+                            for(i in index..notes.size)
+                            {
+                                if(notes[i].id == document.getLong("id")) {
+                                    index = i
+                                    notes.removeAt(i)
+                                    break
+                                }
+                            }
+
+//                            if(document.get("id") == null) {
+//                                var id :Long = 0
+//                                if (document.getLong("id") != null) {
+//                                    id = document.getLong("id")!!
+//                                }
+//                                var note = Note(id, document.getString("content")!!, document.getDate("createdTime"), document.getDate("checkedTime"))
+//                                Log.d("test001", "get note : ${note}")
+//                            }
+                        }
+                        //upload Notes
+                        for(note in notes)
+                        {
+                            write(context, note)
                         }
                     }
         }

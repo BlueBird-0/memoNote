@@ -8,6 +8,7 @@ import android.provider.BaseColumns
 import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 object FeedEntry : BaseColumns {
     val TABLE_NAME = "entry"
@@ -236,6 +237,56 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
                 val whereId = "${BaseColumns._ID} = ${From_Id}"
                 db.update(FeedEntry.TABLE_NAME,  values,  whereId, null)
             }
+        }
+
+        public fun readAllNotes(context: Context) : List<Note> {
+            var listNotes = arrayListOf<Note>()
+            /* db 데이터 읽어오기 */
+            val dbHelper = FeedReaderDbHelper(context)
+            var db = dbHelper.readableDatabase
+
+            val projection = arrayOf(BaseColumns._ID, FeedEntry.COLUMNS_NOTE_CONTENT, FeedEntry.COLUMNS_NOTE_CREATED_TIME, FeedEntry.COLUMNS_NOTE_CHECKED_TIME, FeedEntry.COLUMNS_NOTE_PICTURE_URI)
+
+            val cursor = db.query(
+                    FeedEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    null,//selection,              // The columns for the WHERE clause
+                    null,     // The values for the WHERE clause
+                    null,         // don't group the rowss
+                    null,           // don't filter by row groups
+                    null               // The sort order
+            )
+
+            val itemIds = mutableListOf<Long>()
+            with(cursor){
+                Log.d("MainActivity", "커서 시작됨")
+                while(moveToNext()){
+                    val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
+                    itemIds.add(itemId)
+
+                    Log.d("MainActivity", "ID : "+cursor.getLong(getColumnIndex("${BaseColumns._ID}")))
+                    Log.d("MainActivity", "CONTENT : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}")))
+                    Log.d("MainActivity", "CREATED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+                    Log.d("MainActivity", "CHECKED_TIME : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+                    Log.d("MainActivity", "PICTURE_URI : "+cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}")))
+
+                    val id = cursor.getLong(getColumnIndex("${BaseColumns._ID}"))
+                    val content = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CONTENT}"))
+                    val createdTime : Date? = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CREATED_TIME}")))
+                    var checkedTime : Date?
+                    if (cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")) == null) {
+                        checkedTime = null
+                    }else {
+                        checkedTime = FeedReaderDbHelper.sdf.parse(cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_CHECKED_TIME}")))
+                    }
+                    var pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
+
+                    var note = Note(id, content, createdTime, checkedTime, pictureUri)
+                    //val pictureUri = cursor.getString(getColumnIndex("${FeedEntry.COLUMNS_NOTE_PICTURE_URI}"))
+                    listNotes.add(note)
+                }
+            }
+            return listNotes
         }
     }
 
