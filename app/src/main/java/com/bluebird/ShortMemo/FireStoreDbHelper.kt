@@ -31,7 +31,7 @@ class FireStoreDbHelper {
                         var index = 0
                         for(document in documentReference.documents) {
                             Log.d("test001", "firebase : ${document.getLong("id")}")
-                            for(i in index..notes.size)
+                            for(i in index..notes.size-1)
                             {
                                 if(notes[i].id == document.getLong("id")) {
                                     index = i
