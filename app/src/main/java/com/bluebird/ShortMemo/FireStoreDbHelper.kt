@@ -40,6 +40,7 @@ class FireStoreDbHelper {
                                 }
                             }
 
+//                            download
 //                            if(document.get("id") == null) {
 //                                var id :Long = 0
 //                                if (document.getLong("id") != null) {
@@ -132,10 +133,23 @@ class FireStoreDbHelper {
 
             db.collection("users").document(kakaoId!!).collection("Notes")
                     .whereEqualTo("id", id).get().addOnSuccessListener {
-                        Log.d("test001", "addOnSuccessListener")
                         for (document in it.documents) {
                             document.reference.update("checkedTime", date)
                             Log.d("test001", "document checked")
+                        }
+
+                    }
+        }
+
+        fun update(context : Context, note : Note ,id : Long) {
+            if(!isLogined(context)) return
+            val db = FirebaseFirestore.getInstance()
+
+            db.collection("users").document(kakaoId!!).collection("Notes")
+                    .whereEqualTo("id", id).get().addOnSuccessListener {
+                        for (document in it.documents) {
+                            document.reference.update(note.getHashMap())
+                            Log.d("test001", "document update")
                         }
 
                     }

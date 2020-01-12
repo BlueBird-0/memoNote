@@ -95,6 +95,8 @@ class FeedReaderDbHelper(context : Context) : SQLiteOpenHelper(context, DATABASE
             }
             val db = dbHelper.writableDatabase
             db.update(FeedEntry.TABLE_NAME, values, "${BaseColumns._ID} = ${id}", null)
+
+            FireStoreDbHelper.update(context, note, id)
         }
 
         fun checkData(context: Context, position: Int) {
